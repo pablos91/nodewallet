@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
+import store from '../stores/globalStore';
 
 export interface SideBarProps {
 
@@ -24,10 +25,10 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
                         <FontAwesomeIcon icon={faBitcoin} size="2x" />
                         <span className="ml-2">Bitcoin</span>
                     </NavLink>
-                    <NavLink to="/otherpage" className="d-flex list-group-item flex-column align-items-center list-group-item-action">
+                    <a href="javascript:void(0)" onClick={()=> store.isNewNodeModalOpen = true} className="d-flex list-group-item flex-column align-items-center list-group-item-action">
                         <FontAwesomeIcon icon={faPlusCircle} size="1x" />
                         <span className="">Add another</span>
-                    </NavLink>
+                    </a>
                 </div>
                 <div className="list-group list-group-flush list-group-bottom">
                     <NavLink to="/settings" className="d-flex list-group-item flex-row align-items-center list-group-item-action">

@@ -7,22 +7,17 @@ import AddNewModal from '../components/modals/addNewNode';
 import { observer } from 'mobx-react';
 import store from '../stores/globalStore';
 
-@observer
 class MasterPage extends React.Component {
   render() {
 
     return (
       <div className="d-flex" id="wrapper">
-        <SideBar/>
+        <SideBar />
         <div id="page-content-wrapper">
-          <Route path="/index" exact component={IndexPage}/>
-          <Route path="/otherpage" component={OtherPage}/>
+          <Route path="/index" exact component={IndexPage} />
+          <Route path="/otherpage" component={OtherPage} />
         </div>
-        {
-          store.isNewNodeModalOpen &&
-          <AddNewModal />
-        }
-        
+        <AddNewModal />
       </div>
     );
   }
