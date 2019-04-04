@@ -1,0 +1,10 @@
+html, body, #root, #wrapper, #page-content-wrapper {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#page-content-wrapper {
+    main {
+        padding: 20px;
+    }
+}

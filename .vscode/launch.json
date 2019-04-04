@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "firefox",
+            "request": "attach",
+            "name": "Attach Firefox",
+            "port": 6000,
+            "url": "http://localhost:5000/",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": "server"
+        },
+        {
+            "name": "Attach Chrome",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "url": "http://localhost:5000/",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./~/*": "${webRoot}/node_modules/*",       // Example: "webpack:///./~/querystring/index.js" -> "/Users/me/project/node_modules/querystring/index.js"
+                "webpack:///./*":   "${webRoot}/*",                    // Example: "webpack:///./src/app.js" -> "/Users/me/project/src/app.js",
+                "webpack:///*":     "*",                               // Example: "webpack:///project/app.ts" -> "/project/app.ts"
+                "webpack:///src/*": "${webRoot}/*"                    // Example: "webpack:///src/app.js" -> "/Users/me/project/app.js"
+            }
+        }
+    ]
+}

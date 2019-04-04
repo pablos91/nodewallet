@@ -1,0 +1,41 @@
+{
+    "appId": "pl.com.maple.electron",
+    "productName": "Electron App",
+    "publish": null,
+    "directories": {
+      "output": "builds"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!**/*.tsx",
+      "!*.code-workspace",
+      "!LICENSE.md",
+      "!package.json",
+      "!package-lock.json",
+      "!src/",
+      "!e2e/",
+      "!angular.json",
+      "!_config.yml",
+      "!karma.conf.js",
+      "!tsconfig.json",
+      "!tslint.json"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "artifactName": "${productName}-v${version}-setup-${os}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "msi": {
+      "warningsAsErrors": false
+    }
+  }
