@@ -8,8 +8,10 @@ import { observer } from 'mobx-react';
 import { GlobalContext } from '../contexts/global';
 
 const MasterPage = props => {
+  const [global, setGlobal] = React.useState({test: ''});
+
   return (
-    <GlobalContext.Provider value={{test: 'idk'}}>
+    <GlobalContext.Provider value={{test: global.test, changeTest: (x)=>setGlobal({test: x})}}>
       <div className="d-flex" id="wrapper">
         <SideBar />
         <div id="page-content-wrapper">

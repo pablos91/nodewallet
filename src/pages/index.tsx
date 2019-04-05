@@ -14,7 +14,7 @@ const IndexPage = (props: RouteComponentProps) => {
 
   return (
     <GlobalContext.Consumer>
-      {value => (
+      {({test, changeTest}) => (
         <main>
           <h2>{t("Welcome to React")}</h2>
           <button onClick={() => changeLanguage("de")}>de</button>
@@ -23,9 +23,9 @@ const IndexPage = (props: RouteComponentProps) => {
             <Trans>
               To get started, edit <code>src/App.js</code> and save to reload.
             </Trans>
-            {value.test}
+            {test}
             <Trans i18nKey="welcome">trans</Trans>
-            <input value={value.test} onChange={(e)=> value.test = e.target.value}/>
+            <input value={test} onChange={(e)=> changeTest(e.target.value)}/>
           </div>
         </main>
       )}
