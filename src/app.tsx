@@ -8,7 +8,7 @@ import "../i18n.ts";
 
 ReactDOM.render(
   <HashRouter>
-    <MasterPage/>
+    <MasterPage/> 
   </HashRouter>,
   document.getElementById('root') as HTMLElement
 );
