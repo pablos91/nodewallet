@@ -17,7 +17,7 @@ class MasterPage extends React.Component {
           <Route path="/index" exact component={IndexPage} />
           <Route path="/otherpage" component={OtherPage} />
         </div>
-        <AddNewModal />
+        <AddNewModal test="testowyprops" />
       </div>
     );
   }
