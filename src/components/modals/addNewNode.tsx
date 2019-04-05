@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import store from '../../stores/globalStore';
 
 export interface AddNewModalProps {
     test:string;

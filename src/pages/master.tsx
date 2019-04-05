@@ -5,12 +5,11 @@ import OtherPage from './othersite';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
 import { observer } from 'mobx-react';
-import store from '../stores/globalStore';
+import { GlobalStore } from '../stores/globalStore';
 
-class MasterPage extends React.Component {
-  render() {
-
-    return (
+const MasterPage = props => {
+  return (
+    <GlobalStore.Provider value={{test: 'idk'}}>
       <div className="d-flex" id="wrapper">
         <SideBar />
         <div id="page-content-wrapper">
@@ -19,8 +18,8 @@ class MasterPage extends React.Component {
         </div>
         <AddNewModal test="testowyprops" />
       </div>
-    );
-  }
+    </GlobalStore.Provider>
+  );
 }
 
 export default MasterPage;

@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
-import store from '../stores/globalStore';
 
 export interface SideBarProps {
 
