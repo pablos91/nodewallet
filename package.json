@@ -20,6 +20,7 @@
     "@types/reactstrap": "^7.1.3",
     "bluebird": "^3.5.0",
     "bootstrap": "^4.3.1",
+    "jquery": "^3.3.1",
     "mobx": "^5.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
