@@ -3,7 +3,7 @@ import { BrowserRouter, RouteComponentProps } from 'react-router-dom';
 import { useTranslation, Trans } from "react-i18next";
 import i18n from "i18next";
 import { FullNode } from '../models/FullNode';
-import { GlobalStore } from '../stores/globalStore';
+import { GlobalContext } from '../contexts/global';
 
 const IndexPage = (props: RouteComponentProps) => {
   const { t, i18n } = useTranslation();
@@ -13,7 +13,7 @@ const IndexPage = (props: RouteComponentProps) => {
   };
 
   return (
-    <GlobalStore.Consumer>
+    <GlobalContext.Consumer>
       {value => (
         <main>
           <h2>{t("Welcome to React")}</h2>
@@ -29,7 +29,7 @@ const IndexPage = (props: RouteComponentProps) => {
           </div>
         </main>
       )}
-    </GlobalStore.Consumer>
+    </GlobalContext.Consumer>
   );
 }
 

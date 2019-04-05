@@ -5,11 +5,11 @@ import OtherPage from './othersite';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
 import { observer } from 'mobx-react';
-import { GlobalStore } from '../stores/globalStore';
+import { GlobalContext } from '../contexts/global';
 
 const MasterPage = props => {
   return (
-    <GlobalStore.Provider value={{test: 'idk'}}>
+    <GlobalContext.Provider value={{test: 'idk'}}>
       <div className="d-flex" id="wrapper">
         <SideBar />
         <div id="page-content-wrapper">
@@ -18,7 +18,7 @@ const MasterPage = props => {
         </div>
         <AddNewModal test="testowyprops" />
       </div>
-    </GlobalStore.Provider>
+    </GlobalContext.Provider>
   );
 }
 
