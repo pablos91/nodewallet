@@ -7,7 +7,7 @@ import './scss/app.scss';
 
 ReactDOM.render(
   <HashRouter>
-    <MasterPage/>
+    <MasterPage/> 
   </HashRouter>,
   document.getElementById('root') as HTMLElement
 );
