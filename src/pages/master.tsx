@@ -4,7 +4,6 @@ import IndexPage from '.';
 import OtherPage from './othersite';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
-import { observer } from 'mobx-react';
 import { GlobalContext } from '../contexts/global';
 
 const MasterPage = props => {
