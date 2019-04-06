@@ -36,7 +36,7 @@ const AddNewModal = () => {
                 <Modal isOpen={isNewNodeModalOpen} onClosed={doCleanup} centered>
                     <ModalHeader>{t("add_new_node")}</ModalHeader>
                     <ModalBody>
-                        <Form>
+                        <Form onSubmit={tryAddNewNode}>
                             <FormGroup>
                                 <Label>{t("nodename")}</Label>
                                 <Input invalid={messages.name} value={state.name} onChange={(e) => setState({ name: e.target.value })} />
