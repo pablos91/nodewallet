@@ -9,13 +9,19 @@ import { isUrl, required } from '../../helpers/validators';
 import * as _ from 'lodash';
 
 const AddNewModal = () => {
-    const defaults = {
-        name: ''
+    const defaults: FullNode = {
+        name: '',
+        url: '',
+        rpcpassword: '',
+        rpcuser: ''
     };
     const { t } = useTranslation();
     const [state, setState] = React.useState<FullNode>(defaults);
     const [messages, validate] = useValidator({
-        name: [required]
+        name: [required],
+        url: [required, isUrl],
+        rpcuser: [required],
+        rpcpassword: [required]
     });
 
     React.useEffect(() => {
@@ -29,11 +35,20 @@ const AddNewModal = () => {
             // abort as there's at least one non-null message
             console.log('wrong');
             return;
+        } else {
+            
         }
     }
 
     const doCleanup = () => {
         setState(defaults);
+        //workaround for clearing state
+        validate({
+            name: 'name',
+            url: 'http://example.com',
+            rpcpassword: 'ppp',
+            rpcuser: 'ppp'
+        });
     }
 
     return (
@@ -42,17 +57,33 @@ const AddNewModal = () => {
                 <Modal isOpen={isNewNodeModalOpen} onClosed={doCleanup} centered>
                     <ModalHeader>{t("add_new_node")}</ModalHeader>
                     <ModalBody>
+                        <p>{t("add_new_node_desc")}</p>
                         <Form onSubmit={tryAddNewNode}>
                             <FormGroup>
                                 <Label>{t("nodename")}</Label>
                                 <Input invalid={messages.name} value={state.name} onChange={(e) => setState({ name: e.target.value })} />
                                 <FormFeedback>{messages.name}</FormFeedback>
                             </FormGroup>
+                            <FormGroup>
+                                <Label>{t("url")}</Label>
+                                <Input invalid={messages.url} value={state.url} onChange={(e) => setState({ url: e.target.value })} />
+                                <FormFeedback>{messages.url}</FormFeedback>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>{t("rpcuser")}</Label>
+                                <Input invalid={messages.rpcuser} value={state.rpcuser} onChange={(e) => setState({ rpcuser: e.target.value })} />
+                                <FormFeedback>{messages.rpcuser}</FormFeedback>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>{t("rpcpass")}</Label>
+                                <Input type="password" invalid={messages.rpcpassword} value={state.rpcpassword} onChange={(e) => setState({ rpcpassword: e.target.value })} />
+                                <FormFeedback>{messages.rpcpassword}</FormFeedback>
+                            </FormGroup>
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={tryAddNewNode} color="primary">Do Something</Button>{' '}
-                        <Button onClick={toggleNewNodeModal} color="secondary">Cancel</Button>
+                        <Button onClick={tryAddNewNode} color="primary">{t("add")}</Button>{' '}
+                        <Button onClick={toggleNewNodeModal} color="secondary">{t("cancel")}</Button>
                     </ModalFooter>
                 </Modal>
             )}
