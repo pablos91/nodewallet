@@ -3,16 +3,16 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { GlobalContext } from '../../contexts/global';
 import { FullNode } from '../../models/FullNode';
 import { useTranslation } from 'react-i18next';
-import { StrapInput } from '../inputs/input';
+import { StrapInput, StrapForm } from '../inputs/input';
 import { form, control, button } from 'react-validation';
 import { email as emailValidation, required, email } from '../../helpers/validations';
-import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
 
 const AddNewModal = () => {
     const {t} = useTranslation();
     const [state, setState] = React.useState<FullNode>({});
     const MyValidationInput = control(StrapInput);
-    //const MyValidationForm = form(Form);
+    const MyValidationForm = form(StrapForm);
 
     React.useEffect(() => {
         // component did mount or did update
@@ -32,9 +32,10 @@ const AddNewModal = () => {
                 <Modal isOpen={isNewNodeModalOpen} onClosed={doCleanup} centered>
                     <ModalHeader>{t("add_new_node")}</ModalHeader>
                     <ModalBody>
-                        <Form>
-                            <MyValidationInput value={state.name} validations={[required, emailValidation]} onChange={(e)=> setState({name: e.target.value})}/>
-                        </Form>
+                        <MyValidationForm>
+                            <MyValidationInput value={state.name} validations={[required]} />
+                            {/* <Input value={state.name} validations={[required]}/> */}
+                        </MyValidationForm>
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={tryAddNewNode} color="primary">Do Something</Button>{' '}
