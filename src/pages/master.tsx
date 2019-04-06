@@ -4,13 +4,13 @@ import IndexPage from '.';
 import OtherPage from './othersite';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
-import { GlobalContext } from '../contexts/global';
+import { useGlobalStore } from '../contexts/global';
 
 const MasterPage = props => {
-  const [global, setGlobal] = React.useState({test: ''});
+  const [GlobalContext, GlobalProvider] = useGlobalStore();
 
   return (
-    <GlobalContext.Provider value={{test: global.test, changeTest: (x)=>setGlobal({test: x})}}>
+    <GlobalProvider>
       <div className="d-flex" id="wrapper">
         <SideBar />
         <div id="page-content-wrapper">
@@ -19,7 +19,7 @@ const MasterPage = props => {
         </div>
         <AddNewModal test="testowyprops" />
       </div>
-    </GlobalContext.Provider>
+    </GlobalProvider>
   );
 }
 
