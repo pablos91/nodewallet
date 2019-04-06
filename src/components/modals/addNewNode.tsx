@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback } from 'reactstrap';
 import { GlobalContext } from '../../contexts/global';
-import { FullNode } from '../../models/FullNode';
+import { FullNode } from '../../models/fullNode';
 import { useTranslation } from 'react-i18next';
 import * as validator from 'validator'
 import useValidator, { createRule } from "react-use-validator";
@@ -36,7 +36,7 @@ const AddNewModal = () => {
             console.log('wrong');
             return;
         } else {
-            
+
         }
     }
 
