@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import IndexPage from '.';
-import OtherPage from './othersite';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
 import { GlobalProvider } from '../contexts/global';
+import Settings from './settings';
 
 const MasterPage = props => {
   return (
@@ -13,9 +13,9 @@ const MasterPage = props => {
         <SideBar />
         <div id="page-content-wrapper">
           <Route path="/index" exact component={IndexPage} />
-          <Route path="/otherpage" component={OtherPage} />
+          <Route path="/settings" component={Settings} />
         </div>
-        <AddNewModal test="testowyprops" />
+        <AddNewModal />
       </div>
     </GlobalProvider>
   );

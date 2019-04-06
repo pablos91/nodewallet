@@ -5,17 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
 import { GlobalProvider, GlobalContext } from '../contexts/global';
-
+import { useTranslation } from 'react-i18next';
+const packageJson = require('../../package.json');
 export interface SideBarProps {
 
 }
 
 const SideBar = (props: SideBarProps) => {
+    const { t, i18n } = useTranslation();
+    
     return (
         <GlobalContext.Consumer>
             {({toggleNewNodeModal}) => (
                 <div className="bg-light border-right" id="sidebar-wrapper">
-                    <div className="sidebar-heading">Fullnode UI <small>v1.0.0</small> </div>
+                    <div className="sidebar-heading">Fullnode UI <small>v{packageJson.version}</small> </div>
                     <div className="list-group list-group-flush">
                         {/* this one repeats */}
                         <NavLink to="/index" className="d-flex list-group-item flex-row align-items-center list-group-item-action">
@@ -30,7 +33,7 @@ const SideBar = (props: SideBarProps) => {
                     <div className="list-group list-group-flush list-group-bottom">
                         <NavLink to="/settings" className="d-flex list-group-item flex-row align-items-center list-group-item-action">
                             <FontAwesomeIcon icon={faCog} size="1x" />
-                            <span className="ml-2">Settings</span>
+                            <span className="ml-2">{t("settings")}</span>
                         </NavLink>
                     </div>
                 </div>
