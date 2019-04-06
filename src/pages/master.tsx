@@ -4,11 +4,9 @@ import IndexPage from '.';
 import OtherPage from './othersite';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
-import { useGlobalStore } from '../contexts/global';
+import { GlobalProvider } from '../contexts/global';
 
 const MasterPage = props => {
-  const [GlobalContext, GlobalProvider] = useGlobalStore();
-
   return (
     <GlobalProvider>
       <div className="d-flex" id="wrapper">
