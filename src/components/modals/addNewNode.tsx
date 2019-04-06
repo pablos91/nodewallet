@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import * as validator from 'validator'
 import useValidator, { createRule } from "react-use-validator";
 import { isUrl, required } from '../../helpers/validators';
+import * as _ from 'lodash';
 
 const AddNewModal = () => {
     const defaults = {
@@ -22,8 +23,13 @@ const AddNewModal = () => {
         //console.log(state.name);
     });
 
-    const tryAddNewNode = () => {
-        validate(state);
+    const tryAddNewNode = async () => {
+        var msg: string[] = await validate(state);
+        if (_.size(msg) > 0) {
+            // abort as there's at least one non-null message
+            console.log('wrong');
+            return;
+        }
     }
 
     const doCleanup = () => {
