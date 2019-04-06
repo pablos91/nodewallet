@@ -3,14 +3,21 @@
       "translations": {
         "add_new_node": "Add new node",
         "welcome": "Hello!",
-        "settings": "Settings"
+        "settings": "Settings",
+        "url": "Url",
+        "nodename": "Node name",
+        "rpcuser": "RPC User",
+        "rpcpass": "RPC Password"
       }
     },
     "pl": {
       "translations": {
         "add_new_node": "Dodaj nowy node",
         "welcome": "Witaj!",
-        "settings": "Ustawienia"
+        "settings": "Ustawienia",
+        "nodename": "Nazwa node'a",
+        "rpcuser": "RPC User",
+        "rpcpass": "RPC Password"
       }
     }
   }
