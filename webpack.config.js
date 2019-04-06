@@ -6,7 +6,7 @@ module.exports = {
 
     target: 'electron-renderer',
     entry: {
-        index: "./src/app.tsx"
+        index: ["babel-polyfill","./src/app.tsx"]
     },
 
     devtool: 'source-map',

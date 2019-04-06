@@ -7,7 +7,9 @@
         "url": "Url",
         "nodename": "Node name",
         "rpcuser": "RPC User",
-        "rpcpass": "RPC Password"
+        "rpcpass": "RPC Password",
+        "url_invalid": "Provided url is invalid",
+        "field_required": "Field is required"
       }
     },
     "pl": {
@@ -17,7 +19,9 @@
         "settings": "Ustawienia",
         "nodename": "Nazwa node'a",
         "rpcuser": "RPC User",
-        "rpcpass": "RPC Password"
+        "rpcpass": "RPC Password",
+        "url_invalid": "Podany url jest niepoprawny",
+        "field_required": "Pole jest wymagane"
       }
     }
   }
