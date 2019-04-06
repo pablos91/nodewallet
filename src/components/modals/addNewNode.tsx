@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form } from 'reactstrap';
 import { GlobalContext } from '../../contexts/global';
 import { FullNode } from '../../models/FullNode';
 import { useTranslation } from 'react-i18next';
-import { StrapInput, StrapForm } from '../inputs/input';
-import { form, control, button } from 'react-validation';
-import { email as emailValidation, required, email } from '../../helpers/validations';
-import Input from 'react-validation/build/input';
+import * as Validator from 'simple-react-validator';
 
 const AddNewModal = () => {
+    const defaults = {
+        name: ''
+    };
     const {t} = useTranslation();
-    const [state, setState] = React.useState<FullNode>({});
-    const MyValidationInput = control(StrapInput);
-    const MyValidationForm = form(StrapForm);
+    const [state, setState] = React.useState<FullNode>(defaults);
+    const validator = new Validator();
 
     React.useEffect(() => {
         // component did mount or did update
@@ -20,10 +19,10 @@ const AddNewModal = () => {
     });
 
     const tryAddNewNode = () => {
-
     }
+    
     const doCleanup = () => {
-        setState({});
+        setState(defaults);
     }
 
     return (
@@ -32,10 +31,9 @@ const AddNewModal = () => {
                 <Modal isOpen={isNewNodeModalOpen} onClosed={doCleanup} centered>
                     <ModalHeader>{t("add_new_node")}</ModalHeader>
                     <ModalBody>
-                        <MyValidationForm>
-                            <MyValidationInput value={state.name} validations={[required]} />
-                            {/* <Input value={state.name} validations={[required]}/> */}
-                        </MyValidationForm>
+                        <Form>
+                            <Input required value={state.name} onChange={(e)=>setState({name: e.target.value})}/>
+                        </Form>
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={tryAddNewNode} color="primary">Do Something</Button>{' '}
