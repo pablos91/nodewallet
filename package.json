@@ -23,6 +23,7 @@
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.0",
     "bootstrap": "^4.3.1",
+    "crypto-js": "^3.1.9-1",
     "i18next": "13.1.5",
     "i18next-browser-languagedetector": "2.2.4",
     "i18next-locize-backend": "^1.7.1",
@@ -35,7 +36,6 @@
     "react-use-validator": "^1.0.3",
     "react-validation": "^3.0.7",
     "reactstrap": "^8.0.0",
-    "sha256": "^0.2.0",
     "validator": "^10.11.0"
   },
   "devDependencies": {
