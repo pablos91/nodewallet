@@ -21,8 +21,8 @@ const SideBar = (props: SideBarProps) => {
         config.readConfigFromDisk().then(config => {
             setState({nodes: config.nodes});
         });
-        
     }, []);
+
     return (
         <GlobalContext.Consumer>
             {({ toggleNewNodeModal }) => (
@@ -31,7 +31,7 @@ const SideBar = (props: SideBarProps) => {
                     <div className="list-group list-group-flush">
                         {/* this one repeats */}
                         {state.nodes && state.nodes.map((elem, index) => (
-                            <NavLink to="/index" className="d-flex list-group-item flex-row align-items-center list-group-item-action">
+                            <NavLink key={"sidebar_navlink_"+index} to="/index" className="d-flex list-group-item flex-row align-items-center list-group-item-action">
                                 <FontAwesomeIcon icon={faBitcoin} size="2x" />
                                 <span className="ml-2">Bitcoin</span>
                             </NavLink>
