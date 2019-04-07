@@ -6,6 +6,8 @@ import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
 import { GlobalProvider, GlobalContext } from '../contexts/global';
 import { useTranslation } from 'react-i18next';
+import config from '../helpers/config';
+
 const packageJson = require('../../package.json');
 export interface SideBarProps {
 
@@ -13,15 +15,22 @@ export interface SideBarProps {
 
 const SideBar = (props: SideBarProps) => {
     const { t, i18n } = useTranslation();
-
+    const [state, setState] = React.useState({ nodes: [] });
+    React.useEffect(() => {
+        // action here
+        config.readConfigFromDisk().then(config => {
+            setState({nodes: config.nodes});
+        });
+        
+    }, []);
     return (
         <GlobalContext.Consumer>
-            {({ toggleNewNodeModal, nodes }) => (
+            {({ toggleNewNodeModal }) => (
                 <div className="bg-light border-right" id="sidebar-wrapper">
                     <div className="sidebar-heading">Fullnode UI <small>v{packageJson.version}</small> </div>
                     <div className="list-group list-group-flush">
                         {/* this one repeats */}
-                        {nodes.map((elem, index) => (
+                        {state.nodes && state.nodes.map((elem, index) => (
                             <NavLink to="/index" className="d-flex list-group-item flex-row align-items-center list-group-item-action">
                                 <FontAwesomeIcon icon={faBitcoin} size="2x" />
                                 <span className="ml-2">Bitcoin</span>
