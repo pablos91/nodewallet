@@ -7,10 +7,17 @@ interface SettingsRouteProps {
 }
 
 const Settings = ({location, match}: RouteComponentProps<SettingsRouteProps>) => {
-  const {t} = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = lng => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <main>
       <h2>{t("settings")}</h2>  
+      <button onClick={() => changeLanguage("pl")}>pl</button>
+      <button onClick={() => changeLanguage("en")}>en</button>
     </main> 
   );
 }

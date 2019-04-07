@@ -14,8 +14,6 @@ const IndexPage = (props: RouteComponentProps) => {
   return (
     <main>
       <h2>{t("welcome")}</h2>
-      <button onClick={() => changeLanguage("pl")}>pl</button>
-      <button onClick={() => changeLanguage("en")}>en</button>
       <div className="App-intro">
         <Trans i18nKey="welcome"></Trans>
       </div>
