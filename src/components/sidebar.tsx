@@ -31,7 +31,7 @@ const SideBar = () => {
                         </a>
                     </div>
                     <div className="list-group list-group-flush list-group-bottom">
-                        <NavLink to="/settings" className="d-flex list-group-item flex-row align-items-center list-group-item-action list-group-item-secondary">
+                        <NavLink to="/settings" className="d-flex list-group-item flex-row align-items-center list-group-item-action">
                             <FontAwesomeIcon icon={faCog} size="1x" />
                             <span className="ml-2">{t("settings")}</span>
                         </NavLink>
