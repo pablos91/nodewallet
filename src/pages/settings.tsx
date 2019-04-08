@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, RouteProps, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+const sha = require("crypto-js/sha256");
 
 interface SettingsRouteProps {
   id: string;

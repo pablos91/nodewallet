@@ -39,7 +39,10 @@ const AddNewModal = () => {
             console.log('wrong');
             return;
         } else {
-            console.log(state);
+            //console.log(state);
+            config.saveNodeToConfig(state).then((node)=>{
+                globalContext.addNewNodeToSidebar(node);
+            })
         }
     }
 
@@ -58,7 +61,7 @@ const AddNewModal = () => {
                             </FormGroup>
                             <FormGroup>
                                 <Label>{t("nodetype")}</Label>
-                                <Input type="select">
+                                <Input onChange={(e) => setState({...state, type: e.target.value })} type="select">
                                     <option value="bitcoin">Bitcoin</option>
                                     <option value="litecoin">Litecoin</option>
                                 </Input>
