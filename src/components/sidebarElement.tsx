@@ -11,7 +11,7 @@ interface SidebarElementProps {
 }
 
 const SideBarElement = (props: SidebarElementProps) => (
-    <NavLink to={"/nodes/"+props.node.id} className="d-flex list-group-item flex-row align-items-center list-group-item-action">
+    <NavLink to={"/node/"+props.node.id} className="d-flex list-group-item flex-row align-items-center list-group-item-action">
         <FontAwesomeIcon icon={faBitcoin} size="2x" />
         <span className="ml-2">{props.node.name}</span>
     </NavLink>

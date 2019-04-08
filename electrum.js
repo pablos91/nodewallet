@@ -23,7 +23,6 @@ function createWindow () {
   if(serve) {
     require('electron-reload')(__dirname);
     mainWindow.loadURL('http://localhost:5000/#/index');
-    mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'dist/index.html'),

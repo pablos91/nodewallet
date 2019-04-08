@@ -5,14 +5,16 @@ import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
 import { GlobalProvider, GlobalContext } from '../contexts/global';
 import Settings from './settings';
+import NodePage from './node';
 
-const MasterPage = props => {
+const MasterPage = () => {
   return (
     <GlobalProvider>
       <div className="d-flex" id="wrapper">
         <SideBar />
         <div id="page-content-wrapper">
           <Route path="/index" exact component={IndexPage} />
+          <Route path="/node/:id" component={NodePage} />
           <Route path="/settings" component={Settings} />
         </div>
         <GlobalContext.Consumer>
