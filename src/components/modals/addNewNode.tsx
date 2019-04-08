@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 const AddNewModal = () => {
     const defaults: FullNode = {
         name: '',
+        type:'',
         url: '',
         rpcpassword: '',
         rpcuser: ''
