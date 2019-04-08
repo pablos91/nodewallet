@@ -8,6 +8,7 @@ import useValidator, { createRule } from "react-use-validator";
 import { isUrl, required } from '../../helpers/validators';
 import * as _ from 'lodash';
 import config from '../../helpers/config';
+import { Redirect } from 'react-router';
 
 const AddNewModal = () => {
     const defaults: FullNode = {
@@ -19,6 +20,7 @@ const AddNewModal = () => {
     };
     const { t } = useTranslation();
     const [state, setState] = React.useState<FullNode>(defaults);
+
     const [messages, validate] = useValidator({
         name: [required],
         url: [required, isUrl],
@@ -27,21 +29,14 @@ const AddNewModal = () => {
     });
     const globalContext = React.useContext(GlobalContext);
 
-    React.useEffect(() => {
-        // component did mount or did update
-        console.log('modal mounted');
-    }, []);
-
     const tryAddNewNode = async () => {
         var msg: string[] = await validate(state);
         if (_.size(msg) > 0) {
-            // abort as there's at least one non-null message
-            console.log('wrong');
             return;
         } else {
             //console.log(state);
             config.saveNodeToConfig(state).then((node)=>{
-                globalContext.addNewNodeToSidebar(node);
+                globalContext.toggleNewNodeModal();
             })
         }
     }
