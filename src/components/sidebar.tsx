@@ -14,22 +14,15 @@ const packageJson = require('../../package.json');
 
 const SideBar = () => {
     const { t, i18n } = useTranslation();
-    const [state, setState] = React.useState({ nodes: [] });
-    React.useEffect(() => {
-        // action here
-        config.readConfigFromDisk().then(config => {
-            setState({nodes: config.nodes});
-        });
-    }, []);
-
+    
     return (
         <GlobalContext.Consumer>
-            {({ toggleNewNodeModal }) => (
+            {({ toggleNewNodeModal, nodes }) => (
                 <div className="bg-light border-right" id="sidebar-wrapper">
                     <div className="sidebar-heading">Fullnode UI <small>v{packageJson.version}</small> </div>
                     <div className="list-group list-group-flush">
                         {/* this one repeats */}
-                        {state.nodes && state.nodes.map((elem: FullNode, index) => (
+                        {nodes && nodes.map((elem: FullNode, index) => (
                             <SideBarElement key={"sidebar_element_"+index} node={elem} />
                         ))}
                         <a href="javascript:void(0)" onClick={toggleNewNodeModal} className="d-flex list-group-item flex-column align-items-center list-group-item-action">

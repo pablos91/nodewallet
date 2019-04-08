@@ -12,7 +12,8 @@
         "field_required": "Field is required",
         "cancel": "Cancel",
         "add": "Add",
-        "add_new_node_desc": "Please provide your fullnode's rpc information. BEWARE - do not enter here your private key password!"
+        "add_new_node_desc": "Please provide your fullnode's rpc information. BEWARE - do not enter here your private key password!",
+        "nodetype": "Coin"
       }
     },
     "pl": {
@@ -27,7 +28,8 @@
         "field_required": "Pole jest wymagane",
         "cancel": "Anuluj",
         "add": "Dodaj",
-        "add_new_node_desc": "Wprowadź proszę dane swojego full node'a tak aby aplikacja mogła się z nim komunikować. UWAGA - nie wprowadzaj tutaj hasła do swojego prywatnego klucza!"
+        "add_new_node_desc": "Wprowadź proszę dane swojego full node'a tak aby aplikacja mogła się z nim komunikować. UWAGA - nie wprowadzaj tutaj hasła do swojego prywatnego klucza!",
+        "nodetype": "Waluta"
       }
     }
   }

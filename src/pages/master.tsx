@@ -3,7 +3,7 @@ import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import IndexPage from '.';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
-import { GlobalProvider } from '../contexts/global';
+import { GlobalProvider, GlobalContext } from '../contexts/global';
 import Settings from './settings';
 
 const MasterPage = props => {
@@ -15,7 +15,12 @@ const MasterPage = props => {
           <Route path="/index" exact component={IndexPage} />
           <Route path="/settings" component={Settings} />
         </div>
-        <AddNewModal />
+        <GlobalContext.Consumer>
+            {({ isNewNodeModalOpen }) => (
+              <div>{isNewNodeModalOpen && <AddNewModal /> }</div>
+            )}
+        </GlobalContext.Consumer>
+        
       </div>
     </GlobalProvider>
   );
