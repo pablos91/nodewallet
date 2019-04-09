@@ -15,19 +15,19 @@ export const GlobalContext = React.createContext(defaults);
 export const GlobalProvider = ({ children }) => {
 
     const [global, setGlobal] = React.useState(defaults);
-    const [nodes, setNodes] = React.useState([]);
+    //const [nodes, setNodes] = React.useState([]);
 
     React.useEffect(() => {
         config.readConfigFromDisk().then(config => {
-            setNodes(config.nodes);
+            setGlobal({...global, nodes: config.nodes});
         });
     }, []);
 
     const value = {
         isNewNodeModalOpen: global.isNewNodeModalOpen,
-        nodes: nodes,
+        nodes: global.nodes,
         toggleNewNodeModal: () => setGlobal({...global, isNewNodeModalOpen: !global.isNewNodeModalOpen }),
-        addNewNodeToSidebar: (node: FullNode) => setNodes([...nodes, node])
+        addNewNodeToSidebar: (node: FullNode) => setGlobal({...global, nodes: [... global.nodes, node]})
     };
 
     return (<GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>);
