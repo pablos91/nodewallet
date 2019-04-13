@@ -1,5 +1,10 @@
 export interface RPCResponse {
     result?: any;
-    error?: {};
+    error?: RPCResponseError;
     id?: number;
+}
+
+export interface RPCResponseError {
+    code?: number;
+    message?: string;
 }

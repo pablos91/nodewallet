@@ -6,6 +6,8 @@ import { RPCResponse } from "../rpcresponse";
 import _ = require("lodash");
 
 export class Bitcoin implements FullNode {
+    sendToAddress: (payload: import("../sendToAddressForm").SendToAddressForm) => Promise<string>;
+
     constructor(node: FullNodeConfig) {
         this.config = {
             baseURL: node.url,
@@ -51,6 +53,21 @@ export class Bitcoin implements FullNode {
                     resolve(resp.data.result);
                 } else {
                     reject(resp.data.error);
+                }
+            })
+        })
+    };
+
+    unlockWallet = (passphrase:string) => {
+        return new Promise<boolean>((resolve, reject) => {
+            Axios.post('/', new RPCRequest("walletpassphrase", [passphrase, 60], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
+                if (resp.status == 200) {
+                    resolve(true);
+                } else {
+                    if(resp.data.error.code == -15)
+                        resolve(true);
+                    else
+                        reject(resp.data.error);
                 }
             })
         })
