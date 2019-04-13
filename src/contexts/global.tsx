@@ -15,7 +15,6 @@ export const GlobalContext = React.createContext(defaults);
 export const GlobalProvider = ({ children }) => {
 
     const [global, setGlobal] = React.useState(defaults);
-    //const [nodes, setNodes] = React.useState([]);
 
     React.useEffect(() => {
         config.readConfigFromDisk().then(config => {

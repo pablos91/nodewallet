@@ -1,6 +1,8 @@
 import { Config as ConfigModel} from '../models/config';
 import {FullNode} from '../models/fullNode';
 import {getUniqueHash} from '../helpers/utilities';
+import _ = require('lodash');
+import { rejects } from 'assert';
 
 const electron = require('electron');
 const path = require('path');
@@ -18,6 +20,19 @@ class Config {
         nodes: [],
         language: "en"
     };
+
+    getNodeInfo = (nodeid:string) => {
+        return new Promise<FullNode>((resolve,reject) => {
+            fs.exists(configPath, (exists) => {
+                if (exists) {
+                    let config:ConfigModel = JSON.parse(fs.readFileSync(configPath));
+                    var node = _.find(config.nodes, {id: nodeid});
+                    resolve(node);
+                } else 
+                    reject();
+            });
+        });
+    }
 
     readConfigFromDisk = () => {
         return new Promise<ConfigModel>((resolve) => {

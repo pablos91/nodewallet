@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { BrowserRouter, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import config from '../helpers/config';
+import { FullNode } from '../models/fullNode';
+import NodeBalance from '../components/node/balance';
 
 interface NodePageProps {
     id: string;
@@ -8,12 +11,21 @@ interface NodePageProps {
 
 const NodePage = ({match}: RouteComponentProps<NodePageProps>) => {
   const { t, i18n } = useTranslation();
+  const [node, setNode] = React.useState<FullNode>();
 
-  return (
+  React.useEffect(()=>{
+    config.getNodeInfo(match.params.id).then(node => {
+      setNode(node);
+    });
+  }, []);
+  
+
+  return node ? (
     <main>
-      <h2>{match.params.id}</h2>
+      <h2>{node.name}</h2>
+        <NodeBalance node={node} />
     </main>
-  );
+  ) : (<p>Loading ...</p>);
 }
 
 export default NodePage;
