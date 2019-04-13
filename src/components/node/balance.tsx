@@ -20,11 +20,21 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     const global = React.useContext(GlobalContext);
     const [balance, setBalance] = React.useState(0);
 
-    React.useEffect(() => {
+    const getBalance = () => {
         NodeResolver(node).getBalance().then(resp => {
             setBalance(resp);
         })
         .catch((reason)=> alert(reason));
+    }
+
+    React.useEffect(() => {
+        getBalance();
+
+        let interval = setInterval(()=> {
+            getBalance();
+        }, 5000);
+
+        return () => { clearInterval(interval) };
     }, [node]); // load new data on node props change
 
     return (

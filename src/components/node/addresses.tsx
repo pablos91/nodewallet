@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCog, faPlusCircle, faCopy, faQrcode, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
 import { GlobalContext } from '../../contexts/global';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { RPCRequest } from '../../models/rpcrequest';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { RPCResponse } from '../../models/rpcresponse';
 import { NodeResolver } from '../../models/nodes/noderesolver';
-import { Card, CardBody, CardTitle, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip } from 'reactstrap';
 import CardHeader from 'reactstrap/lib/CardHeader';
 
 interface NodeAddressesProps {
@@ -54,8 +54,8 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                         <Nav tabs card={true}>
                             {
                                 labels.map((elem, key) => (
-                                    <NavItem key={"label_"+key}>
-                                        <ReactNavLink active={state.selectedLabel == elem} href="javascript:void(0);" onClick={()=> setState({...state, selectedLabel: elem })}>{elem == "" ? t("default") : elem}</ReactNavLink>
+                                    <NavItem key={"label_" + key}>
+                                        <ReactNavLink active={state.selectedLabel == elem} href="javascript:void(0);" onClick={() => setState({ ...state, selectedLabel: elem })}>{elem == "" ? t("default") : elem}</ReactNavLink>
                                     </NavItem>
                                 ))
                             }
@@ -68,8 +68,21 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
 
                 {addresses.length > 0 ?
                     <ListGroup flush>
-                        {addresses.map((elem,index) => (
-                            <ListGroupItem key={"address_" + index} tag="span">{elem}</ListGroupItem>
+                        {addresses.map((elem, index) => (
+                            <ListGroupItem className="d-flex align-items-center" key={"address_" + index} tag="div">
+                                {elem}
+                                <div className="ml-auto">
+                                    <a href="#" id={"clipboard_"+index}><FontAwesomeIcon icon={faCopy} /></a>
+                                    <a className="ml-2" href="#" id={"details_"+index}><FontAwesomeIcon icon={faInfoCircle} /></a>
+                                    <UncontrolledTooltip placement="bottom" target={"details_"+index}>
+                                        {t("show_address_details")}
+                                    </UncontrolledTooltip>
+                                    <UncontrolledTooltip placement="bottom" target={"clipboard_"+index}>
+                                        {t("copy_to_clipboard")}
+                                    </UncontrolledTooltip>
+                                </div>
+
+                            </ListGroupItem>
                         ))}
                     </ListGroup> : <p>No results</p>
                 }
