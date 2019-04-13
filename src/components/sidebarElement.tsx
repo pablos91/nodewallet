@@ -3,11 +3,11 @@ import { NavLink, NavLinkProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
-import { FullNode } from '../models/fullNode';
+import { FullNodeConfig } from '../models/fullNode';
 import { node } from 'prop-types';
 
 interface SidebarElementProps {
-    node: FullNode;
+    node: FullNodeConfig;
 }
 
 const SideBarElement = (props: SidebarElementProps) => (

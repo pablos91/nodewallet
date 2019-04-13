@@ -1,4 +1,4 @@
-export interface FullNode {
+export interface FullNodeConfig {
     id?: string;
     type?:string;
     name?:string;

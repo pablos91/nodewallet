@@ -1,5 +1,5 @@
 import { Config as ConfigModel} from '../models/config';
-import {FullNode} from '../models/fullNode';
+import {FullNodeConfig} from '../models/fullNode';
 import {getUniqueHash} from '../helpers/utilities';
 import _ = require('lodash');
 import { rejects } from 'assert';
@@ -22,7 +22,7 @@ class Config {
     };
 
     getNodeInfo = (nodeid:string) => {
-        return new Promise<FullNode>((resolve,reject) => {
+        return new Promise<FullNodeConfig>((resolve,reject) => {
             fs.exists(configPath, (exists) => {
                 if (exists) {
                     let config:ConfigModel = JSON.parse(fs.readFileSync(configPath));
@@ -47,10 +47,10 @@ class Config {
         });
     }
 
-    saveNodeToConfig = (node:FullNode) => {
+    saveNodeToConfig = (node:FullNodeConfig) => {
         let nodeToSave = {... node, id: getUniqueHash()}
 
-        return new Promise<FullNode>((resolve, reject) => {
+        return new Promise<FullNodeConfig>((resolve, reject) => {
             fs.exists(configPath, (exists) => {
                 if (exists) {
                     this.config.nodes.push(nodeToSave);

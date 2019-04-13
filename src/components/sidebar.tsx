@@ -7,7 +7,7 @@ import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
 import { GlobalProvider, GlobalContext } from '../contexts/global';
 import { useTranslation } from 'react-i18next';
 import config from '../helpers/config';
-import { FullNode } from '../models/fullNode';
+import { FullNodeConfig } from '../models/fullNode';
 import SideBarElement from './sidebarElement';
 
 const packageJson = require('../../package.json');
@@ -22,7 +22,7 @@ const SideBar = () => {
                     <div className="sidebar-heading">Fullnode UI <small>v{packageJson.version}</small> </div>
                     <div className="list-group list-group-flush">
                         {/* this one repeats */}
-                        {nodes && nodes.map((elem: FullNode, index) => (
+                        {nodes && nodes.map((elem: FullNodeConfig, index) => (
                             <SideBarElement key={"sidebar_element_"+index} node={elem} />
                         ))}
                         <a href="javascript:void(0)" onClick={toggleNewNodeModal} className="d-flex list-group-item flex-column align-items-center list-group-item-action">

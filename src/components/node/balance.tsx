@@ -7,11 +7,12 @@ import { GlobalContext } from '../../contexts/global';
 import { useTranslation } from 'react-i18next';
 import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { RPCRequest } from '../../models/rpcrequest';
-import { FullNode } from '../../models/fullNode';
+import { FullNodeConfig } from '../../models/fullNode';
 import { RPCResponse } from '../../models/rpcresponse';
+import { NodeResolver } from '../../models/nodes/noderesolver';
 
 interface NodeBalanceProps {
-    node: FullNode;
+    node: FullNodeConfig;
 }
 
 const NodeBalance = ({ node }: NodeBalanceProps) => {
@@ -20,14 +21,9 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     const [balance, setBalance] = React.useState(0);
 
     React.useEffect(() => {
+        let nodeResolved = new NodeResolver(node);
 
-        Axios.post('/', new RPCRequest("getbalance", [], 1), {
-            baseURL: node.url,
-            auth: {
-              username: node.rpcuser,
-              password: node.rpcpassword
-            }
-          }).then((resp:AxiosResponse<RPCResponse>) => {
+        Axios.post('/', nodeResolved.node.getBalance(), nodeResolved.config).then((resp:AxiosResponse<RPCResponse>) => {
             if (resp.status == 200) {
                 setBalance(resp.data.result);
             }

@@ -1,6 +1,6 @@
-import { FullNode } from "./FullNode";
+import { FullNodeConfig } from "./FullNode";
 
 export interface Config {
-    nodes: FullNode[];
+    nodes: FullNodeConfig[];
     language: string;
 }

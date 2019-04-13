@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback } from 'reactstrap';
 import { GlobalContext } from '../../contexts/global';
-import { FullNode } from '../../models/fullNode';
+import { FullNodeConfig } from '../../models/fullNode';
 import { useTranslation } from 'react-i18next';
 import * as validator from 'validator'
 import useValidator, { createRule } from "react-use-validator";
@@ -11,7 +11,7 @@ import config from '../../helpers/config';
 import { Redirect } from 'react-router';
 
 const AddNewModal = () => {
-    const defaults: FullNode = {
+    const defaults: FullNodeConfig = {
         name: '',
         type: 'bitcoin',
         url: '',
@@ -19,7 +19,7 @@ const AddNewModal = () => {
         rpcuser: ''
     };
     const { t } = useTranslation();
-    const [state, setState] = React.useState<FullNode>(defaults);
+    const [state, setState] = React.useState<FullNodeConfig>(defaults);
 
     const [messages, validate] = useValidator({
         name: [required],
