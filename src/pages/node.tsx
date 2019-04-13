@@ -5,6 +5,7 @@ import config from '../helpers/config';
 import { FullNodeConfig } from '../models/fullNodeConfig';
 import NodeBalance from '../components/node/balance';
 import { Button } from 'reactstrap';
+import NodeAddresses from '../components/node/addresses';
 
 interface NodePageProps {
     id: string;
@@ -26,6 +27,7 @@ const NodePage = ({match}: RouteComponentProps<NodePageProps>) => {
       <h2>{node.name}</h2>
       <NodeBalance node={node} />
       <Button color="primary">Send</Button>
+      <NodeAddresses node={node} />
     </main>
   ) : (<main>Loading ...</main>);
 }

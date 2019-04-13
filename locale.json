@@ -14,7 +14,11 @@
         "add": "Add",
         "add_new_node_desc": "Please provide your fullnode's rpc information. BEWARE - do not enter here your private key password!",
         "nodetype": "Coin",
-        "balance": "Balance"
+        "balance": "Balance",
+        "add_new_label": "Add new label",
+        "default": "Default",
+        "no_results": "No results",
+        "addresses": "Addresses"
       }
     },
     "pl": {
@@ -31,7 +35,11 @@
         "add": "Dodaj",
         "add_new_node_desc": "Wprowadź proszę dane swojego full node'a tak aby aplikacja mogła się z nim komunikować. UWAGA - nie wprowadzaj tutaj hasła do swojego prywatnego klucza!",
         "nodetype": "Waluta",
-        "balance": "Stan konta"
+        "balance": "Stan konta",
+        "add_new_label": "Dodaj nową etykietę",
+        "default": "Domyślne",
+        "no_results": "Brak wyników",
+        "addresses": "Adresy"
       }
     }
   }
