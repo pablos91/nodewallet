@@ -18,7 +18,8 @@
         "add_new_label": "Add new label",
         "default": "Default",
         "no_results": "No results",
-        "addresses": "Addresses"
+        "addresses": "Addresses",
+        "add_new_address": "Add new address"
       }
     },
     "pl": {
@@ -39,7 +40,8 @@
         "add_new_label": "Dodaj nową etykietę",
         "default": "Domyślne",
         "no_results": "Brak wyników",
-        "addresses": "Adresy"
+        "addresses": "Adresy",
+        "add_new_address": "Dodaj nowy adres"
       }
     }
   }

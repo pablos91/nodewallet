@@ -26,10 +26,14 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         selectedLabel: ""
     })
 
-    React.useEffect(() => {
-        NodeResolver(node).getAddresses().then(resp => {
+    const getAddresses = (label: string = "") => {
+        NodeResolver(node).getAddresses(label).then(resp => {
             setAddresses(resp);
         }).catch((reason) => alert(reason));
+    }
+
+    React.useEffect(() => {
+        getAddresses();
 
         if (node.type == "bitcoin") {
             NodeResolver(node).getLabels().then(resp => {
@@ -37,6 +41,10 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
             }).catch((reason) => alert(reason));
         }
     }, [node]); // load new data on node props change
+
+    React.useEffect(() => {
+        getAddresses(state.selectedLabel);
+    }, [state.selectedLabel])
 
     return (
         <div>
@@ -46,8 +54,8 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                         <Nav tabs card={true}>
                             {
                                 labels.map((elem, key) => (
-                                    <NavItem>
-                                        <ReactNavLink active={state.selectedLabel == elem} href="#">{elem == "" ? t("default") : elem}</ReactNavLink>
+                                    <NavItem key={"label_"+key}>
+                                        <ReactNavLink active={state.selectedLabel == elem} href="javascript:void(0);" onClick={()=> setState({...state, selectedLabel: elem })}>{elem == "" ? t("default") : elem}</ReactNavLink>
                                     </NavItem>
                                 ))
                             }
@@ -61,7 +69,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                 {addresses.length > 0 ?
                     <ListGroup flush>
                         {addresses.map((elem,index) => (
-                            <ListGroupItem tag="span">{elem}</ListGroupItem>
+                            <ListGroupItem key={"address_" + index} tag="span">{elem}</ListGroupItem>
                         ))}
                     </ListGroup> : <p>No results</p>
                 }
