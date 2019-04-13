@@ -17,7 +17,7 @@ const NodePage = ({match}: RouteComponentProps<NodePageProps>) => {
     config.getNodeInfo(match.params.id).then(node => {
       setNode(node);
     });
-  }, []);
+  }, [match.params.id]); // load new node on url change
   
 
   return node ? (
@@ -25,7 +25,7 @@ const NodePage = ({match}: RouteComponentProps<NodePageProps>) => {
       <h2>{node.name}</h2>
         <NodeBalance node={node} />
     </main>
-  ) : (<p>Loading ...</p>);
+  ) : (<main>Loading ...</main>);
 }
 
 export default NodePage;

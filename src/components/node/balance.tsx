@@ -33,7 +33,7 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
             }
         });
 
-    }, [node]);
+    }, [node]); // load new data on node props change
 
     return (
         <div>
