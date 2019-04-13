@@ -10,6 +10,7 @@ import { RPCRequest } from '../../models/rpcrequest';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { RPCResponse } from '../../models/rpcresponse';
 import { NodeResolver } from '../../models/nodes/noderesolver';
+import { NodeContext } from '../../pages/node';
 
 interface NodeBalanceProps {
     node: FullNodeConfig;
@@ -18,6 +19,7 @@ interface NodeBalanceProps {
 const NodeBalance = ({ node }: NodeBalanceProps) => {
     const { t, i18n } = useTranslation();
     const global = React.useContext(GlobalContext);
+    const nodeContext = React.useContext(NodeContext);
     const [balance, setBalance] = React.useState(0);
 
     const getBalance = () => {

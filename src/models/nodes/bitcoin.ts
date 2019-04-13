@@ -1,12 +1,12 @@
 import { RPCRequest } from "../rpcrequest";
 import { FullNode } from "./node";
 import { FullNodeConfig } from "../fullNodeConfig";
-import Axios, { AxiosRequestConfig, AxiosResponse, AxiosPromise } from "axios";
+import Axios, { AxiosRequestConfig, AxiosResponse, AxiosPromise, AxiosError } from "axios";
 import { RPCResponse } from "../rpcresponse";
 import _ = require("lodash");
+import { SendToAddressForm } from "../sendToAddressForm";
 
 export class Bitcoin implements FullNode {
-    sendToAddress: (payload: import("../sendToAddressForm").SendToAddressForm) => Promise<string>;
 
     constructor(node: FullNodeConfig) {
         this.config = {
@@ -23,11 +23,9 @@ export class Bitcoin implements FullNode {
     getBalance = () => {
         return new Promise<number>((resolve, reject) => {
             Axios.post('/', new RPCRequest("getbalance", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
-                if (resp.status == 200) {
-                    resolve(resp.data.result);
-                } else {
-                    reject(resp.data.error);
-                }
+                resolve(resp.data.result);
+            }).catch((error: AxiosError) => {
+                reject(error.response.data.error);
             })
         })
     }
@@ -35,13 +33,11 @@ export class Bitcoin implements FullNode {
     getAddresses = (label: string = "") => {
         return new Promise<string[]>((resolve, reject) => {
             Axios.post('/', new RPCRequest("getaddressesbylabel", [label], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
-                if (resp.status == 200) {
-                    let addresses: string[] = [];
-                    _.forOwn(resp.data.result, (v,k)=>addresses.push(k));
-                    resolve(addresses);
-                } else {
-                    reject(resp.data.error);
-                }
+                let addresses: string[] = [];
+                _.forOwn(resp.data.result, (v, k) => addresses.push(k));
+                resolve(addresses);
+            }).catch((error: AxiosError) => {
+                reject(error.response.data.error);
             })
         })
     };
@@ -49,27 +45,37 @@ export class Bitcoin implements FullNode {
     getLabels = () => {
         return new Promise<string[]>((resolve, reject) => {
             Axios.post('/', new RPCRequest("listlabels", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
-                if (resp.status == 200) {
-                    resolve(resp.data.result);
-                } else {
-                    reject(resp.data.error);
-                }
+                resolve(resp.data.result);
+            }).catch((error: AxiosError) => {
+                reject(error.response.data.error);
             })
         })
     };
 
-    unlockWallet = (passphrase:string) => {
+    unlockWallet = (passphrase: string) => {
         return new Promise<boolean>((resolve, reject) => {
-            Axios.post('/', new RPCRequest("walletpassphrase", [passphrase, 60], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
-                if (resp.status == 200) {
+            Axios.post('/', new RPCRequest("walletpassphrase", [passphrase, 60], 1), this.config)
+                .then((resp: AxiosResponse<RPCResponse>) => {
                     resolve(true);
-                } else {
-                    if(resp.data.error.code == -15)
+                })
+                .catch((error: AxiosError) => {
+                    if (error.response.data.error.code == -15)
                         resolve(true);
                     else
-                        reject(resp.data.error);
-                }
-            })
+                        reject(false);
+                })
         })
     };
+
+    sendToAddress = (payload: SendToAddressForm) => {
+        return new Promise<string>((resolve, reject) => {
+            Axios.post('/', new RPCRequest("sendtoaddress", [payload.address, payload.amount, payload.comment, "", true], 1), this.config)
+                .then((resp: AxiosResponse<RPCResponse>) => {
+                    resolve();
+                })
+                .catch((error: AxiosError) => {
+                    reject(error.response.data.error.message);
+                })
+        })
+    }
 }

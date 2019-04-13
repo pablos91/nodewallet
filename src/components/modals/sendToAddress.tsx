@@ -1,12 +1,19 @@
 import * as React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback, Alert } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { NodeContext } from '../../pages/node';
 import { SendToAddressForm } from '../../models/sendToAddressForm';
 import { required, overZero } from '../../helpers/validators';
 import useValidator, { createRule } from "react-use-validator";
+import _ = require('lodash');
+import { NodeResolver } from '../../models/nodes/noderesolver';
+import { FullNodeConfig } from '../../models/fullNodeConfig';
 
-const SendToAddressModal = (props) => {
+interface SendToAddressModalProps {
+    node: FullNodeConfig;
+}
+
+const SendToAddressModal = ({node}:SendToAddressModalProps) => {
     const { toggleSendToAddressModal } = React.useContext(NodeContext);
     const [form, setForm] = React.useState({
         address: '',
@@ -22,13 +29,44 @@ const SendToAddressModal = (props) => {
         comment: [required]
     });
 
+    const [error, setError] = React.useState("");
+    const [success, setSuccess] = React.useState("");
+
+
     const trySendToAddress = async () => {
+        setError('');
+        setSuccess('');
+
         var msg: string[] = await validate(form);
+        if (_.size(msg) > 0) {
+            return;
+        } else {
+            NodeResolver(node).unlockWallet(form.walletPass).then((resp) => {
+                NodeResolver(node).sendToAddress(form).then((resp) => {
+                    setSuccess(t("amount_sent_to_address") + " " + form.address);
+                }).catch(error => {
+                    setError(error);
+                })
+            }).catch(error => {
+                setError(t("wrong_wallet_pass"));
+            })
+        }
     }
+
     return (
         <Modal isOpen={true} centered>
             <ModalHeader>{t("send_to_address")}</ModalHeader>
             <ModalBody>
+                {error &&
+                    <Alert color="danger">
+                        {error}
+                    </Alert>
+                }
+                {success &&
+                    <Alert color="success">
+                        {success}
+                    </Alert>
+                }
                 <p>{t("send_to_address_desc")}</p>
                 <Form onSubmit={trySendToAddress}>
                     <FormGroup>

@@ -42,7 +42,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
         <Button onClick={() => setState({ ...state, isSendToAddressModalOpen: true })} color="primary">Send</Button>
         <NodeAddresses node={node} />
         {state.isSendToAddressModalOpen &&
-          <SendToAddressModal />
+          <SendToAddressModal node={node} />
         }
       </main>
     </NodeContext.Provider>
