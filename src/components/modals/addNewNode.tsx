@@ -13,7 +13,7 @@ import { Redirect } from 'react-router';
 const AddNewModal = () => {
     const defaults: FullNode = {
         name: '',
-        type: '',
+        type: 'bitcoin',
         url: '',
         rpcpassword: '',
         rpcuser: ''
@@ -34,7 +34,7 @@ const AddNewModal = () => {
         if (_.size(msg) > 0) {
             return;
         } else {
-            //console.log(state);
+            console.log(state);
             config.saveNodeToConfig(state).then((node)=>{
                 globalContext.toggleNewNodeModal();
             })
