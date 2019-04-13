@@ -25,8 +25,7 @@ const SendToAddressModal = ({node}:SendToAddressModalProps) => {
     const { t } = useTranslation();
     const [messages, validate] = useValidator({
         address: [required],
-        amount: [overZero],
-        comment: [required]
+        amount: [overZero]
     });
 
     const [error, setError] = React.useState("");
