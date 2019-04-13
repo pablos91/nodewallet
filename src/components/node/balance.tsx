@@ -21,10 +21,8 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     const [balance, setBalance] = React.useState(0);
 
     React.useEffect(() => {
-        let nodeResolved = new NodeResolver(node);
-
-        Axios.post('/', nodeResolved.node.getBalance(), nodeResolved.config).then((resp:AxiosResponse<RPCResponse>) => {
-            if (resp.status == 200) {
+        NodeResolver(node).getBalance().then(resp => {
+            if(resp.status == 200) {
                 setBalance(resp.data.result);
             }
         });
