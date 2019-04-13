@@ -71,7 +71,7 @@ export class Bitcoin implements FullNode {
         return new Promise<string>((resolve, reject) => {
             Axios.post('/', new RPCRequest("sendtoaddress", [payload.address, payload.amount, payload.comment, "", true], 1), this.config)
                 .then((resp: AxiosResponse<RPCResponse>) => {
-                    resolve();
+                    resolve(resp.data.result); // thats txid in string
                 })
                 .catch((error: AxiosError) => {
                     reject(error.response.data.error.message);
