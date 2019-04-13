@@ -2,8 +2,9 @@ import { RPCRequest } from "../rpcrequest";
 import { FullNode } from "./node";
 import { FullNodeConfig } from "../fullNode";
 import Axios, { AxiosRequestConfig, AxiosResponse, AxiosPromise } from "axios";
+import { RPCResponse } from "../rpcresponse";
 
-export class Bitcoin<T> implements FullNode<T> {
+export class Bitcoin<T> implements FullNode {
     constructor(node:FullNodeConfig) {
         this.config = {
             baseURL: node.url,
@@ -17,6 +18,14 @@ export class Bitcoin<T> implements FullNode<T> {
     private config: AxiosRequestConfig;
 
     getBalance = () => {
-        return Axios.post('/', new RPCRequest("getbalance", [], 1), this.config) as AxiosPromise<T>;
+        return new Promise<number>((resolve, reject)=>{
+            Axios.post('/', new RPCRequest("getbalance", [], 1), this.config).then((resp:AxiosResponse<RPCResponse>)=>{
+                if(resp.status == 200) {
+                    resolve(resp.data.result);
+                } else {
+                    reject(resp.data.error);
+                }
+            });
+        });
     }
 }

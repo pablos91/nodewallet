@@ -22,11 +22,9 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
 
     React.useEffect(() => {
         NodeResolver(node).getBalance().then(resp => {
-            if(resp.status == 200) {
-                setBalance(resp.data.result);
-            }
-        });
-
+            setBalance(resp);
+        })
+        .catch((reason)=> alert(reason));
     }, [node]); // load new data on node props change
 
     return (
