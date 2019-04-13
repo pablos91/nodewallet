@@ -19,7 +19,9 @@
         "default": "Default",
         "no_results": "No results",
         "addresses": "Addresses",
-        "add_new_address": "Add new address"
+        "add_new_address": "Add new address",
+        "send_to_address": "Send to address",
+        "send": "Send"
       }
     },
     "pl": {
@@ -41,7 +43,9 @@
         "default": "Domyślne",
         "no_results": "Brak wyników",
         "addresses": "Adresy",
-        "add_new_address": "Dodaj nowy adres"
+        "add_new_address": "Dodaj nowy adres",
+        "send_to_address": "Wyślij na adres",
+        "send": "Wyślij"
       }
     }
   }
