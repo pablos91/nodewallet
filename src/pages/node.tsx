@@ -25,7 +25,7 @@ const NodePage = ({match}: RouteComponentProps<NodePageProps>) => {
     <main>
       <h2>{node.name}</h2>
       <NodeBalance node={node} />
-      <Button color="primary">Receive</Button>
+      <Button color="primary">Send</Button>
     </main>
   ) : (<main>Loading ...</main>);
 }
