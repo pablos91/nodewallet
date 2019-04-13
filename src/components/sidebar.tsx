@@ -7,7 +7,7 @@ import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
 import { GlobalProvider, GlobalContext } from '../contexts/global';
 import { useTranslation } from 'react-i18next';
 import config from '../helpers/config';
-import { FullNodeConfig } from '../models/fullNode';
+import { FullNodeConfig } from '../models/fullNodeConfig';
 import SideBarElement from './sidebarElement';
 
 const packageJson = require('../../package.json');

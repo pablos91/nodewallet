@@ -1,5 +1,5 @@
 import { Config as ConfigModel} from '../models/config';
-import {FullNodeConfig} from '../models/fullNode';
+import {FullNodeConfig} from '../models/fullNodeConfig';
 import {getUniqueHash} from '../helpers/utilities';
 import _ = require('lodash');
 import { rejects } from 'assert';

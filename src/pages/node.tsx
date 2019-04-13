@@ -2,8 +2,9 @@ import * as React from 'react';
 import { BrowserRouter, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import config from '../helpers/config';
-import { FullNodeConfig } from '../models/fullNode';
+import { FullNodeConfig } from '../models/fullNodeConfig';
 import NodeBalance from '../components/node/balance';
+import { Button } from 'reactstrap';
 
 interface NodePageProps {
     id: string;
@@ -23,7 +24,8 @@ const NodePage = ({match}: RouteComponentProps<NodePageProps>) => {
   return node ? (
     <main>
       <h2>{node.name}</h2>
-        <NodeBalance node={node} />
+      <NodeBalance node={node} />
+      <Button color="primary">Receive</Button>
     </main>
   ) : (<main>Loading ...</main>);
 }

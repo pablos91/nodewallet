@@ -1,10 +1,10 @@
 import { RPCRequest } from "../rpcrequest";
 import { FullNode } from "./node";
-import { FullNodeConfig } from "../fullNode";
+import { FullNodeConfig } from "../fullNodeConfig";
 import Axios, { AxiosRequestConfig, AxiosResponse, AxiosPromise } from "axios";
 import { RPCResponse } from "../rpcresponse";
 
-export class Bitcoin<T> implements FullNode {
+export class Bitcoin implements FullNode {
     constructor(node:FullNodeConfig) {
         this.config = {
             baseURL: node.url,

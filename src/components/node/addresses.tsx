@@ -11,11 +11,11 @@ import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { RPCResponse } from '../../models/rpcresponse';
 import { NodeResolver } from '../../models/nodes/noderesolver';
 
-interface NodeBalanceProps {
+interface NodeAddressesProps {
     node: FullNodeConfig;
 }
 
-const NodeBalance = ({ node }: NodeBalanceProps) => {
+const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const { t, i18n } = useTranslation();
     const global = React.useContext(GlobalContext);
     const [balance, setBalance] = React.useState(0);
@@ -35,4 +35,4 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     );
 }
 
-export default NodeBalance;
+export default NodeAddresses;

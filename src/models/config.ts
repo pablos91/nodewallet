@@ -1,4 +1,4 @@
-import { FullNodeConfig } from "./FullNode";
+import { FullNodeConfig } from "./fullNodeConfig";
 
 export interface Config {
     nodes: FullNodeConfig[];
