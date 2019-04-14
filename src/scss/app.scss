@@ -4,8 +4,13 @@ $modal-content-border-radius: none;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
+body {
+  border: 1px solid $primary;
+}
+
+
 #wrapper {
-  height: calc(100vh - 24px);
+  height: calc(100vh - 26px);
   overflow-x: hidden;
 }
 
