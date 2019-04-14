@@ -21,7 +21,8 @@ function createWindow () {
       nodeIntegration: true,
       webSecurity: false
     },
-    frame: false
+    frame: false,
+    titleBarStyle: 'hidden'
   })
 
   // and load the index.html of the app.

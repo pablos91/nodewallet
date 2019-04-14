@@ -10,6 +10,7 @@ import NodePage from './node';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 const { remote } = require('electron')
+const {platform} = require('os');
 
 const MasterPage = () => {
 
@@ -21,9 +22,14 @@ const MasterPage = () => {
     <GlobalProvider>
       <div className="d-flex flex-column">
         <div id="toolbar" className="d-flex text-light bg-primary px-2">
+          {process.platform != "darwin" ?
           <a className="ml-auto" style={{ 'cursor': 'pointer' }} onClick={closeApplication}>
             <FontAwesomeIcon icon={faTimes} />
           </a>
+          :
+          <span>&nbsp;</span>
+          }
+          
         </div>
         <div className="d-flex" id="wrapper">
           <SideBar />
