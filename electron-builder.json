@@ -1,6 +1,6 @@
 {
-    "appId": "pl.com.maple.electron",
-    "productName": "Electron App",
+    "appId": "pl.com.maple.fullnodeui",
+    "productName": "FullNode UI",
     "publish": null,
     "directories": {
       "output": "builds"

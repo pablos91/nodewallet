@@ -2,17 +2,24 @@ $border-radius: none;
 $primary: #563d7c;
 $modal-content-border-radius: none;
 
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import "node_modules/bootstrap/scss/bootstrap";
 
-html, body, #root, #wrapper, #page-content-wrapper {
-    min-height: 100vh;
-    overflow-x: hidden;
-    
+#wrapper {
+  height: calc(100vh - 24px);
+  overflow-x: hidden;
 }
 
 #page-content-wrapper {
-    width: 100%;
-    main {
-        padding: 20px;
-    }
+  width: 100%;
+  main {
+    padding: 20px;
+  }
+}
+
+#toolbar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  a {
+    -webkit-app-region: no-drag;
+  }
 }

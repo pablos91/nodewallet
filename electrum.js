@@ -17,7 +17,8 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false
-    }
+    },
+    frame: false
   })
 
   // and load the index.html of the app.
