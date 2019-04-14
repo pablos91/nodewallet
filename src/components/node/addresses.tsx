@@ -13,6 +13,8 @@ import { NodeResolver } from '../../models/nodes/noderesolver';
 import { Card, CardBody, CardTitle, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip } from 'reactstrap';
 import CardHeader from 'reactstrap/lib/CardHeader';
 
+const { clipboard } = require('electron')
+
 interface NodeAddressesProps {
     node: FullNodeConfig;
 }
@@ -23,12 +25,20 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const [addresses, setAddresses] = React.useState<string[]>([]);
     const [labels, setLabels] = React.useState<string[]>([]);
     const [state, setState] = React.useState({
-        selectedLabel: ""
+        selectedLabel: "",
+        copiedAddress: ""
     })
+    const resolvedNode = NodeResolver(node);
 
     const getAddresses = (label: string = "") => {
-        NodeResolver(node).getAddresses(label).then(resp => {
+        resolvedNode.getAddresses(label).then(resp => {
             setAddresses(resp);
+        }).catch((reason) => alert(reason));
+    }
+
+    const getNewAddress = () => {
+        resolvedNode.getNewAddress().then(resp => {
+            setAddresses([...addresses, resp]);
         }).catch((reason) => alert(reason));
     }
 
@@ -36,7 +46,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         getAddresses();
 
         if (node.type == "bitcoin") {
-            NodeResolver(node).getLabels().then(resp => {
+            resolvedNode.getLabels().then(resp => {
                 setLabels(resp);
             }).catch((reason) => alert(reason));
         }
@@ -71,22 +81,23 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
 
                 {addresses.length > 0 ?
                     <ListGroup flush>
-                        {addresses.map((elem, index) => (
-                            <ListGroupItem className="d-flex align-items-center" key={"address_" + index} tag="div">
-                                {elem}
-                                <div className="ml-auto">
-                                    <a href="#" id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
-                                    <a className="ml-2" href="#" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
-                                    <UncontrolledTooltip placement="bottom" target={"details_" + index}>
-                                        {t("show_address_details")}
-                                    </UncontrolledTooltip>
-                                    <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
-                                        {t("copy_to_clipboard")}
-                                    </UncontrolledTooltip>
-                                </div>
-
-                            </ListGroupItem>
-                        ))}
+                        {addresses.map((elem, index) => {
+                            return (
+                                <ListGroupItem className="d-flex align-items-center" key={"address_" + index} tag="div">
+                                    {elem}
+                                    <div className="ml-auto">
+                                        <a href="javascript:void(0)" onClick={() => {clipboard.writeText(elem); setState({...state, copiedAddress: elem})}} id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
+                                        <a className="ml-2" href="javascript:void(0)" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
+                                        <UncontrolledTooltip placement="bottom" target={"details_" + index}>
+                                            {t("show_address_details")}
+                                        </UncontrolledTooltip>
+                                        <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
+                                            {state.copiedAddress == elem ? t("copied") : t("copy_to_clipboard")}
+                                        </UncontrolledTooltip>
+                                    </div>
+                                </ListGroupItem>
+                            )
+                        })}
                     </ListGroup> : <p>No results</p>
                 }
 

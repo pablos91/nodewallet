@@ -28,8 +28,8 @@
         "comment": "Comment",
         "wallet_password": "Wallet passphrase",
         "copy_to_clipboard": "Copy to clipboard",
-        "show_address_details": "Show address details"
-
+        "show_address_details": "Show address details",
+        "copied": "Copied!"
       }
     },
     "pl": {
@@ -60,7 +60,8 @@
         "comment": "Komentarz",
         "wallet_password": "Hasło portfela",
         "copy_to_clipboard": "Skopiuj do schowka",
-        "show_address_details": "Pokaż szczegóły dla adresu"
+        "show_address_details": "Pokaż szczegóły dla adresu",
+        "copied": "Skopiowano!"
       }
     }
   }

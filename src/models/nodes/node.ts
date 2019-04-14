@@ -6,5 +6,6 @@ export interface FullNode {
     getLabels?: () => Promise<string[]>;
     sendToAddress: (payload: SendToAddressForm) => Promise<string>;
     unlockWallet?: (passphrase: string) => Promise<boolean>;
+    getNewAddress?: (label?: string) => Promise<string>;
     symbol: string;
 }

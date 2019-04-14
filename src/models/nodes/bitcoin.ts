@@ -43,6 +43,16 @@ export class Bitcoin implements FullNode {
         })
     };
 
+    getNewAddress = (label: string = "") => {
+        return new Promise<string>((resolve, reject) => {
+            Axios.post('/', new RPCRequest("getnewaddress", [label], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
+                resolve(resp.data.result);
+            }).catch((error: AxiosError) => {
+                reject(error.response.data.error);
+            })
+        })
+    };
+
     getLabels = () => {
         return new Promise<string[]>((resolve, reject) => {
             Axios.post('/', new RPCRequest("listlabels", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
