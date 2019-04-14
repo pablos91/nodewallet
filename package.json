@@ -7,7 +7,8 @@
     "start": "webpack-dev-server",
     "build": "webpack --mode=production --devtool=''",
     "electron:serve": "electron . --serve",
-    "electron:win64": "npm run build && electron-builder build --windows --x64"
+    "electron:win64": "npm run build && electron-builder build --windows --x64",
+    "electron:mac": "npm run build && electron-builder build --mac"
   },
   "author": "",
   "license": "ISC",

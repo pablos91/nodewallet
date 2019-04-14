@@ -23,7 +23,13 @@
     ],
     "win": {
       "target": [
-        "portable"
+        "nsis"
+      ],
+      "artifactName": "${productName}-v${version}-setup-${os}-${arch}.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg"
       ],
       "artifactName": "${productName}-v${version}-setup-${os}-${arch}.${ext}"
     },
