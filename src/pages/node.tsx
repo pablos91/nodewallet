@@ -9,6 +9,7 @@ import NodeAddresses from '../components/node/addresses';
 import SendToAddressModal from '../components/modals/sendToAddress';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NodeTransactions from '../components/node/transactions';
 
 interface NodePageProps {
   id: string;
@@ -40,7 +41,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
     <NodeContext.Provider value={nodeContextValue}>
       <main>
         <h2 className="text-primary">{node.name}</h2>
-        <div className="row pb-4">
+        <div className="row pb-5">
           <div className="col">
             <NodeBalance node={node} />
           </div>
@@ -49,7 +50,16 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
           </div>
         </div>
 
-        <NodeAddresses node={node} />
+        <div className="row">
+          <div className="col-lg-6 col-xs-12">
+            <NodeAddresses node={node} />
+            <br/>
+          </div>
+          <div className="col-lg-6 col-xs-12">
+            <NodeTransactions node={node} />
+            <br/>
+          </div>
+        </div>
         {state.isSendToAddressModalOpen &&
           <SendToAddressModal node={node} />
         }
