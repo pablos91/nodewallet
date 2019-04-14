@@ -77,9 +77,10 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                                     </NavItem>
                                 ))
                             }
-                            <NavItem>
+                            {/* it's impossible to add new label without adding new address.
+                             <NavItem>
                                 <ReactNavLink href="#"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_label")}</ReactNavLink>
-                            </NavItem>
+                            </NavItem> */}
                         </Nav>
                     </CardHeader>
                 }
@@ -92,10 +93,10 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                                         {elem}
                                         <div className="ml-auto">
                                             <a href="javascript:void(0)" onClick={() => { clipboard.writeText(elem); setState({ ...state, copiedAddress: elem }) }} id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
-                                            <a className="ml-2" href="javascript:void(0)" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
+                                            {/* <a className="ml-2" href="javascript:void(0)" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
                                             <UncontrolledTooltip placement="bottom" target={"details_" + index}>
                                                 {t("show_address_details")}
-                                            </UncontrolledTooltip>
+                                            </UncontrolledTooltip> */}
                                             <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
                                                 {state.copiedAddress == elem ? t("copied") : t("copy_to_clipboard")}
                                             </UncontrolledTooltip>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback, Alert } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback, Alert, InputGroup, InputGroupText, InputGroupAddon } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { NodeContext } from '../../pages/node';
 import { SendToAddressForm } from '../../models/sendToAddressForm';
@@ -13,7 +13,7 @@ interface SendToAddressModalProps {
     node: FullNodeConfig;
 }
 
-const SendToAddressModal = ({node}:SendToAddressModalProps) => {
+const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
     const { toggleSendToAddressModal } = React.useContext(NodeContext);
     const [form, setForm] = React.useState({
         address: '',
@@ -25,12 +25,13 @@ const SendToAddressModal = ({node}:SendToAddressModalProps) => {
     const { t } = useTranslation();
     const [messages, validate] = useValidator({
         address: [required],
-        amount: [overZero]
+        amount: [overZero],
+        walletPass: [required]
     });
 
     const [error, setError] = React.useState("");
     const [success, setSuccess] = React.useState("");
-
+    const resolvedNode = NodeResolver(node);
 
     const trySendToAddress = async () => {
         setError('');
@@ -75,7 +76,12 @@ const SendToAddressModal = ({node}:SendToAddressModalProps) => {
                     </FormGroup>
                     <FormGroup>
                         <Label>{t("amount")}</Label>
-                        <Input type="number" min="0" step="0.001" invalid={messages.amount} value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
+                        <InputGroup>
+                            <Input type="number" min="0" step="0.001" invalid={messages.amount} value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText>{resolvedNode.symbol}</InputGroupText>
+                            </InputGroupAddon>
+                        </InputGroup>
                         <FormFeedback>{messages.amount}</FormFeedback>
                     </FormGroup>
                     <FormGroup>

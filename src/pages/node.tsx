@@ -40,7 +40,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
     <NodeContext.Provider value={nodeContextValue}>
       <main>
         <h2 className="text-primary">{node.name}</h2>
-        <div className="row pb-3">
+        <div className="row pb-4">
           <div className="col">
             <NodeBalance node={node} />
           </div>
