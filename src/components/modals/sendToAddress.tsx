@@ -67,7 +67,7 @@ const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
                         {success}
                     </Alert>
                 }
-                <p>{t("send_to_address_desc")}</p>
+                {/* <p>{t("send_to_address_desc")}</p> */}
                 <Form onSubmit={trySendToAddress}>
                     <FormGroup>
                         <Label>{t("address")}</Label>

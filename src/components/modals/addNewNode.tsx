@@ -35,7 +35,7 @@ const AddNewModal = () => {
             return;
         } else {
             console.log(state);
-            config.saveNodeToConfig(state).then((node)=>{
+            config.saveNodeToConfig(state).then((node) => {
                 globalContext.toggleNewNodeModal();
             })
         }
@@ -44,38 +44,46 @@ const AddNewModal = () => {
     return (
         <GlobalContext.Consumer>
             {({ toggleNewNodeModal }) => (
-                <Modal isOpen={true} centered>
+                <Modal size="lg" isOpen={true} centered>
                     <ModalHeader>{t("add_new_node")}</ModalHeader>
                     <ModalBody>
-                        <p>{t("add_new_node_desc")}</p>
+                        {/* <p>{t("add_new_node_desc")}</p> */}
                         <Form onSubmit={tryAddNewNode}>
                             <FormGroup>
                                 <Label>{t("nodename")}</Label>
-                                <Input invalid={messages.name} value={state.name} onChange={(e) => setState({...state, name: e.target.value })} />
+                                <Input invalid={messages.name} value={state.name} onChange={(e) => setState({ ...state, name: e.target.value })} />
                                 <FormFeedback>{messages.name}</FormFeedback>
                             </FormGroup>
                             <FormGroup>
                                 <Label>{t("nodetype")}</Label>
-                                <Input onChange={(e) => setState({...state, type: e.target.value })} type="select">
+                                <Input onChange={(e) => setState({ ...state, type: e.target.value })} type="select">
                                     <option value="bitcoin">Bitcoin</option>
                                     <option value="litecoin">Litecoin</option>
                                 </Input>
                             </FormGroup>
                             <FormGroup>
                                 <Label>{t("url")}</Label>
-                                <Input invalid={messages.url} value={state.url} onChange={(e) => setState({...state, url: e.target.value })} />
+                                <Input invalid={messages.url} value={state.url} onChange={(e) => setState({ ...state, url: e.target.value })} />
                                 <FormFeedback>{messages.url}</FormFeedback>
                             </FormGroup>
-                            <FormGroup>
-                                <Label>{t("rpcuser")}</Label>
-                                <Input invalid={messages.rpcuser} value={state.rpcuser} onChange={(e) => setState({...state, rpcuser: e.target.value })} />
-                                <FormFeedback>{messages.rpcuser}</FormFeedback>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>{t("rpcpass")}</Label>
-                                <Input type="password" invalid={messages.rpcpassword} value={state.rpcpassword} onChange={(e) => setState({...state, rpcpassword: e.target.value })} />
-                                <FormFeedback>{messages.rpcpassword}</FormFeedback>
-                            </FormGroup>
+                            <div className="row">
+                                <div className="col">
+                                    <FormGroup>
+                                        <Label>{t("rpcuser")}</Label>
+                                        <Input invalid={messages.rpcuser} value={state.rpcuser} onChange={(e) => setState({ ...state, rpcuser: e.target.value })} />
+                                        <FormFeedback>{messages.rpcuser}</FormFeedback>
+                                    </FormGroup>
+                                </div>
+                                <div className="col">
+                                    <FormGroup>
+                                        <Label>{t("rpcpass")}</Label>
+                                        <Input type="password" invalid={messages.rpcpassword} value={state.rpcpassword} onChange={(e) => setState({ ...state, rpcpassword: e.target.value })} />
+                                        <FormFeedback>{messages.rpcpassword}</FormFeedback>
+                                    </FormGroup>
+                                </div>
+                            </div>
+
+
                         </Form>
                     </ModalBody>
                     <ModalFooter>

@@ -6,6 +6,9 @@ $modal-content-border-radius: none;
 
 body {
   border: 1px solid $primary;
+  &.modal-open {
+    padding: 0 !important;
+  }
 }
 
 
