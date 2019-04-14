@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import config from '../helpers/config';
 import { FullNodeConfig } from '../models/fullNodeConfig';
 import SideBarElement from './sidebarElement';
+import Scrollbars, { positionValues } from 'react-custom-scrollbars';
 
 const packageJson = require('../../package.json');
 
