@@ -12,6 +12,8 @@ import { RPCResponse } from '../../models/rpcresponse';
 import { NodeResolver } from '../../models/nodes/noderesolver';
 import { Card, CardBody, CardTitle, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip } from 'reactstrap';
 import CardHeader from 'reactstrap/lib/CardHeader';
+import * as _ from 'lodash';
+import Scrollbars from 'react-custom-scrollbars';
 
 const { clipboard } = require('electron')
 
@@ -26,7 +28,8 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const [labels, setLabels] = React.useState<string[]>([]);
     const [state, setState] = React.useState({
         selectedLabel: "",
-        copiedAddress: ""
+        copiedAddress: "",
+        newestAddress: ""
     })
     const resolvedNode = NodeResolver(node);
 
@@ -37,8 +40,10 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     }
 
     const getNewAddress = () => {
-        resolvedNode.getNewAddress().then(resp => {
-            setAddresses([...addresses, resp]);
+        resolvedNode.getNewAddress(state.selectedLabel).then(resp => {
+            setState({ ...state, newestAddress: resp });
+            let addr = [...addresses, resp];
+            setAddresses(_.sortBy(addr, [function (o) { return o; }]));
         }).catch((reason) => alert(reason));
     }
 
@@ -78,31 +83,31 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                         </Nav>
                     </CardHeader>
                 }
-
-                {addresses.length > 0 ?
-                    <ListGroup flush>
-                        {addresses.map((elem, index) => {
-                            return (
-                                <ListGroupItem className="d-flex align-items-center" key={"address_" + index} tag="div">
-                                    {elem}
-                                    <div className="ml-auto">
-                                        <a href="javascript:void(0)" onClick={() => {clipboard.writeText(elem); setState({...state, copiedAddress: elem})}} id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
-                                        <a className="ml-2" href="javascript:void(0)" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
-                                        <UncontrolledTooltip placement="bottom" target={"details_" + index}>
-                                            {t("show_address_details")}
-                                        </UncontrolledTooltip>
-                                        <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
-                                            {state.copiedAddress == elem ? t("copied") : t("copy_to_clipboard")}
-                                        </UncontrolledTooltip>
-                                    </div>
-                                </ListGroupItem>
-                            )
-                        })}
-                    </ListGroup> : <p>No results</p>
-                }
-
+                <Scrollbars style={{'height': '15rem'}}>
+                    {addresses.length > 0 ?
+                        <ListGroup flush>
+                            {addresses.map((elem, index) => {
+                                return (
+                                    <ListGroupItem color={elem == state.newestAddress ? "warning" : ""} className="d-flex align-items-center" key={"address_" + index} tag="div">
+                                        {elem}
+                                        <div className="ml-auto">
+                                            <a href="javascript:void(0)" onClick={() => { clipboard.writeText(elem); setState({ ...state, copiedAddress: elem }) }} id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
+                                            <a className="ml-2" href="javascript:void(0)" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
+                                            <UncontrolledTooltip placement="bottom" target={"details_" + index}>
+                                                {t("show_address_details")}
+                                            </UncontrolledTooltip>
+                                            <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
+                                                {state.copiedAddress == elem ? t("copied") : t("copy_to_clipboard")}
+                                            </UncontrolledTooltip>
+                                        </div>
+                                    </ListGroupItem>
+                                )
+                            })}
+                        </ListGroup> : <p>No results</p>
+                    }
+                </Scrollbars>
                 <CardFooter className="d-flex">
-                    <Button className="ml-auto"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_address")}</Button>
+                    <Button onClick={getNewAddress} className="ml-auto"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_address")}</Button>
                 </CardFooter>
             </Card>
         </div>
