@@ -21,12 +21,16 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     const global = React.useContext(GlobalContext);
     const nodeContext = React.useContext(NodeContext);
     const [balance, setBalance] = React.useState(0);
+    const [symbol, setSymbol] = React.useState('');
+    const resolvedNode = NodeResolver(node);
 
     const getBalance = () => {
-        NodeResolver(node).getBalance().then(resp => {
+        resolvedNode.getBalance().then(resp => {
             setBalance(resp);
         })
         .catch((reason)=> alert(reason));
+
+        setSymbol(resolvedNode.symbol);
     }
 
     React.useEffect(() => {
@@ -42,7 +46,7 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     return (
         <div>
             <strong>{t("balance")}</strong>
-            <h2>{balance}</h2>
+            <h2>{balance} {symbol}</h2>
         </div>
     );
 }

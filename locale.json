@@ -21,7 +21,15 @@
         "addresses": "Addresses",
         "add_new_address": "Add new address",
         "send_to_address": "Send to address",
-        "send": "Send"
+        "send": "Send",
+        "send_to_address_desc": "Choose where to you want to send your funds. Fee will be automatically substracted from amount according to your node preference.",
+        "address": "Address",
+        "amount": "Amount",
+        "comment": "Comment",
+        "wallet_password": "Wallet passphrase",
+        "copy_to_clipboard": "Copy to clipboard",
+        "show_address_details": "Show address details"
+
       }
     },
     "pl": {
@@ -45,7 +53,14 @@
         "addresses": "Adresy",
         "add_new_address": "Dodaj nowy adres",
         "send_to_address": "Wyślij na adres",
-        "send": "Wyślij"
+        "send": "Wyślij",
+        "send_to_address_desc": "Wybierz do kogo chcesz wysłać określoną ilość tokenów. Z wpisanej kwoty zostanie pobrana prowizja sieci w kwocie ustalonej przez Twój fullnode.",
+        "address": "Adres odbiorcy",
+        "amount": "Kwota",
+        "comment": "Komentarz",
+        "wallet_password": "Hasło portfela",
+        "copy_to_clipboard": "Skopiuj do schowka",
+        "show_address_details": "Pokaż szczegóły dla adresu"
       }
     }
   }

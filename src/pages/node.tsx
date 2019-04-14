@@ -7,6 +7,8 @@ import NodeBalance from '../components/node/balance';
 import { Button } from 'reactstrap';
 import NodeAddresses from '../components/node/addresses';
 import SendToAddressModal from '../components/modals/sendToAddress';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NodePageProps {
   id: string;
@@ -24,7 +26,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
   })
 
   const nodeContextValue = {
-    toggleSendToAddressModal: () => setState({...state, isSendToAddressModalOpen: !state.isSendToAddressModalOpen})
+    toggleSendToAddressModal: () => setState({ ...state, isSendToAddressModalOpen: !state.isSendToAddressModalOpen })
   };
 
   React.useEffect(() => {
@@ -37,9 +39,16 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
   return node ? (
     <NodeContext.Provider value={nodeContextValue}>
       <main>
-        <h2>{node.name}</h2>
-        <NodeBalance node={node} />
-        <Button onClick={() => setState({ ...state, isSendToAddressModalOpen: true })} color="primary">Send</Button>
+        <h2 className="text-primary">{node.name}</h2>
+        <div className="row pb-3">
+          <div className="col">
+            <NodeBalance node={node} />
+          </div>
+          <div className="col-3 d-flex">
+            <Button block onClick={() => setState({ ...state, isSendToAddressModalOpen: true })} color="primary"><FontAwesomeIcon icon={faUpload} /> Send</Button>
+          </div>
+        </div>
+
         <NodeAddresses node={node} />
         {state.isSendToAddressModalOpen &&
           <SendToAddressModal node={node} />

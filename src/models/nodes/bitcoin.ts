@@ -7,6 +7,7 @@ import _ = require("lodash");
 import { SendToAddressForm } from "../sendToAddressForm";
 
 export class Bitcoin implements FullNode {
+    symbol: string = "BTC";
 
     constructor(node: FullNodeConfig) {
         this.config = {

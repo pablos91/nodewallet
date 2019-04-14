@@ -52,6 +52,9 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                 {node.type == "bitcoin" &&
                     <CardHeader>
                         <Nav tabs card={true}>
+                            <NavItem className="d-flex align-items-center pr-3 pl-2">
+                                {t("addresses")}:
+                            </NavItem>
                             {
                                 labels.map((elem, key) => (
                                     <NavItem key={"label_" + key}>
@@ -72,12 +75,12 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                             <ListGroupItem className="d-flex align-items-center" key={"address_" + index} tag="div">
                                 {elem}
                                 <div className="ml-auto">
-                                    <a href="#" id={"clipboard_"+index}><FontAwesomeIcon icon={faCopy} /></a>
-                                    <a className="ml-2" href="#" id={"details_"+index}><FontAwesomeIcon icon={faInfoCircle} /></a>
-                                    <UncontrolledTooltip placement="bottom" target={"details_"+index}>
+                                    <a href="#" id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
+                                    <a className="ml-2" href="#" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
+                                    <UncontrolledTooltip placement="bottom" target={"details_" + index}>
                                         {t("show_address_details")}
                                     </UncontrolledTooltip>
-                                    <UncontrolledTooltip placement="bottom" target={"clipboard_"+index}>
+                                    <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
                                         {t("copy_to_clipboard")}
                                     </UncontrolledTooltip>
                                 </div>
