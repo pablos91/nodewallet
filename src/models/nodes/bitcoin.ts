@@ -5,6 +5,7 @@ import Axios, { AxiosRequestConfig, AxiosResponse, AxiosPromise, AxiosError } fr
 import { RPCResponse } from "../rpcresponse";
 import _ = require("lodash");
 import { SendToAddressForm } from "../sendToAddressForm";
+import { Transaction } from "../transaction";
 
 export class Bitcoin implements FullNode {
     symbol: string = "BTC";
@@ -83,6 +84,34 @@ export class Bitcoin implements FullNode {
             Axios.post('/', new RPCRequest("sendtoaddress", [payload.address, payload.amount, payload.comment, "", true], 1), this.config)
                 .then((resp: AxiosResponse<RPCResponse>) => {
                     resolve(resp.data.result); // thats txid in string
+                })
+                .catch((error: AxiosError) => {
+                    reject(error.response.data.error.message);
+                })
+        })
+    }
+
+    getAllTransactions = () => {
+        return new Promise<Transaction[]>((resolve, reject) => {
+            Axios.post('/', new RPCRequest("listtransactions", [], 1), this.config)
+                .then((resp: AxiosResponse<RPCResponse>) => {
+                    let transactions = [] as Transaction[];
+
+                    if(resp.data.result) {
+                        resp.data.result.map((elem) => {
+                            transactions.splice(0,0,{
+                                amount: elem.amount,
+                                received: elem.category == "receive",
+                                confirmations: elem.confirmations,
+                                id: elem.txid,
+                                date: elem.time,
+                                dateReceived: elem.timereceived,
+                                address: elem.address
+                            });
+                        })
+                    }
+
+                    resolve(transactions);
                 })
                 .catch((error: AxiosError) => {
                     reject(error.response.data.error.message);

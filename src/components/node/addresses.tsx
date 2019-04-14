@@ -5,7 +5,7 @@ import { GlobalContext } from '../../contexts/global';
 import { useTranslation } from 'react-i18next';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { NodeResolver } from '../../models/nodes/noderesolver';
-import { Card, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip } from 'reactstrap';
+import { Card, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip, CardBody } from 'reactstrap';
 import CardHeader from 'reactstrap/lib/CardHeader';
 import * as _ from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
@@ -63,7 +63,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                     <CardHeader>
                         <Nav tabs card={true}>
                             <NavItem className="d-flex align-items-center pr-3 pl-2">
-                                {t("addresses")}:
+                                <strong>{t("addresses")}:</strong>
                             </NavItem>
                             {
                                 labels.map((elem, key) => (
@@ -79,8 +79,8 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                         </Nav>
                     </CardHeader>
                 }
+                {addresses.length > 0 ?
                 <Scrollbars style={{'height': '15rem'}}>
-                    {addresses.length > 0 ?
                         <ListGroup flush>
                             {addresses.map((elem, index) => {
                                 return (
@@ -99,9 +99,11 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                                     </ListGroupItem>
                                 )
                             })}
-                        </ListGroup> : <p>No results</p>
-                    }
+                        </ListGroup>
+
                 </Scrollbars>
+                : <CardBody style={{'height': '15rem'}} className="d-flex align-items-center text-center"><p className="flex-fill">{t("no_data")}</p></CardBody>}
+
                 <CardFooter className="d-flex">
                     <Button onClick={getNewAddress} className="ml-auto"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_address")}</Button>
                 </CardFooter>

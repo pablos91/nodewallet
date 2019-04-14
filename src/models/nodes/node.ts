@@ -1,4 +1,5 @@
 import { SendToAddressForm } from "../sendToAddressForm";
+import { Transaction } from "../transaction";
 
 export interface FullNode {
     getBalance: () => Promise<number>;
@@ -8,5 +9,6 @@ export interface FullNode {
     unlockWallet?: (passphrase: string) => Promise<boolean>;
     getNewAddress?: (label?: string) => Promise<string>;
     getNewLabel?: (label?: string) => Promise<string>;
+    getAllTransactions: () => Promise<Transaction[]>;
     symbol: string;
 }
