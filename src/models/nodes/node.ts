@@ -1,5 +1,6 @@
 import { SendToAddressForm } from "../sendToAddressForm";
 import { Transaction } from "../transaction";
+import { CancelTokenSource } from "axios";
 
 export interface FullNode {
     getBalance: () => Promise<number>;
@@ -11,4 +12,5 @@ export interface FullNode {
     getNewLabel?: (label?: string) => Promise<string>;
     getAllTransactions: () => Promise<Transaction[]>;
     symbol: string;
+    cancelToken:CancelTokenSource;
 }

@@ -26,6 +26,7 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
 
     const getBalance = () => {
         //console.log('balance check');
+
         resolvedNode.getBalance().then(resp => {
             setBalance(resp);
             dispatch({type: 'REACHABLE_CHECK', value: true});
@@ -42,7 +43,7 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
             getBalance();
         }, 5000);
 
-        return () => { clearInterval(interval) };
+        return () => { clearInterval(interval); resolvedNode.cancelToken.cancel(); };
     }, [node]); // load new data on node props change
 
     return (

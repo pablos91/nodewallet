@@ -10,6 +10,7 @@ import i18n from "../../../i18n";
 
 export class Bitcoin implements FullNode {
     symbol: string = "BTC";
+    cancelToken = Axios.CancelToken.source();
 
     constructor(node: FullNodeConfig) {
         this.config = {
@@ -18,7 +19,8 @@ export class Bitcoin implements FullNode {
                 username: node.rpcuser,
                 password: node.rpcpassword
             },
-            timeout: 3000
+            timeout: 3000,
+            cancelToken: this.cancelToken.token
         };
     }
 
