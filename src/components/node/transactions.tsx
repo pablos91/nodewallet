@@ -52,7 +52,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
         getTransactions();
     }, [node]); // load new data on node props change
 
-    return (
+    return nodeContext.isReachable ? (
         <BlockUi tag="div" blocking={state.loading}>
             <Card>
                 <CardHeader className="d-flex align-items-center pb-2">
@@ -90,7 +90,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
                 </CardFooter>
             </Card>
         </BlockUi>
-    );
+    ) : (<div></div>);
 }
 
 export default NodeTransactions;

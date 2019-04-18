@@ -64,7 +64,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         getAddresses(state.selectedLabel);
     }, [state.selectedLabel])
 
-    return (
+    return nodeContext.isReachable ? (
         <BlockUi tag="div" blocking={state.loading}>
             <Card>
                 {(node.type == "bitcoin" || node.type == "litecoin") ?
@@ -122,7 +122,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                 </CardFooter>
             </Card>
         </BlockUi>
-    );
+    ) : (<div></div>);
 }
 
 export default NodeAddresses;
