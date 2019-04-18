@@ -16,7 +16,8 @@ export class Litecoin implements FullNode {
             auth: {
                 username: node.rpcuser,
                 password: node.rpcpassword
-            }
+            },
+            timeout: 3000
         };
     }
 
@@ -27,7 +28,7 @@ export class Litecoin implements FullNode {
             Axios.post('/', new RPCRequest("getbalance", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     }
