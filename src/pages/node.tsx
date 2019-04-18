@@ -17,11 +17,7 @@ interface NodePageProps {
   id: string;
 }
 
-export const NodeContext = React.createContext({
-  toggleSendToAddressModal: () => { },
-  isUnreachable: () => {},
-  isReachable: () => {}
-});
+export const NodeContext = React.createContext(null);
 
 const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
   const { t, i18n } = useTranslation();
@@ -30,16 +26,25 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
     loading: true,
     isReachable: true
   })
-  const [sendModalOpen, setSendModalOpen] = React.useState(false);
-
-  const nodeContextValue = {
-    toggleSendToAddressModal: () => setSendModalOpen(!sendModalOpen),
-    isUnreachable: () => setState({...state, isReachable: false}),
-    isReachable: () => setState({...state, isReachable: true})
-  };
+  // const [sendModalOpen, setSendModalOpen] = React.useState(false);
+  const [nodeContext, dispatch] = React.useReducer((nodeState, action) => {
+    switch(action.type) {
+      case "OPEN_SEND_MODAL":
+        return {...nodeState, isSendModalOpen: true};
+      case "CLOSE_SEND_MODAL":
+        return {...nodeState, isSendModalOpen: false};
+      case "REACHABLE_CHECK":
+        return {...nodeState, isReachable: action.value};
+      default:
+        throw t("action_unknown");
+    }
+  }, {
+    isReachable: true,
+    isSendModalOpen: false
+  });
 
   React.useEffect(() => {
-    setNode(null);
+    //setNode(null);
     setState({ ...state, loading: true });
 
     config.getNodeInfo(match.params.id).then(node => {
@@ -50,7 +55,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
 
 
   return (
-    <NodeContext.Provider value={nodeContextValue}>
+    <NodeContext.Provider value={dispatch}>
       {node &&
         (<main>
           {!state.isReachable &&
@@ -65,7 +70,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
               <NodeBalance node={node} />
             </div>
             <div className="col-3 d-flex">
-              <Button block onClick={() => setSendModalOpen(true)} color="primary"><FontAwesomeIcon icon={faUpload} /> Send</Button>
+              <Button block onClick={() => dispatch({type: 'OPEN_SEND_MODAL'})} color="primary"><FontAwesomeIcon icon={faUpload} /> Send</Button>
             </div>
           </div>
 
@@ -79,7 +84,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
               <br />
             </div>
           </div>
-          {sendModalOpen &&
+          {nodeContext.isSendModalOpen &&
             <SendToAddressModal node={node} />
           }
         </main>)

@@ -19,17 +19,18 @@ interface NodeBalanceProps {
 const NodeBalance = ({ node }: NodeBalanceProps) => {
     const { t, i18n } = useTranslation();
     const global = React.useContext(GlobalContext);
-    const nodeContext = React.useContext(NodeContext);
+    const dispatch = React.useContext(NodeContext);
     const [balance, setBalance] = React.useState(0);
     const [symbol, setSymbol] = React.useState('');
     const resolvedNode = NodeResolver(node);
 
     const getBalance = () => {
+        //console.log('balance check');
         resolvedNode.getBalance().then(resp => {
             setBalance(resp);
-            nodeContext.isReachable()
+            dispatch({type: 'REACHABLE_CHECK', value: true});
         })
-        .catch((reason)=> nodeContext.isUnreachable());
+        .catch((reason)=> dispatch({type: 'REACHABLE_CHECK', value: false}));
 
         setSymbol(resolvedNode.symbol);
     }

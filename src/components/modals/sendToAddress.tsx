@@ -14,7 +14,7 @@ interface SendToAddressModalProps {
 }
 
 const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
-    const { toggleSendToAddressModal } = React.useContext(NodeContext);
+    const dispatch = React.useContext(NodeContext);
     const [form, setForm] = React.useState({
         address: '',
         amount: '0',
@@ -98,7 +98,7 @@ const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
             </ModalBody>
             <ModalFooter>
                 <Button disabled={form.loading} onClick={trySendToAddress} color="primary">{t("send")}</Button>{' '}
-                <Button onClick={toggleSendToAddressModal} color="secondary">{t("cancel")}</Button>
+                <Button onClick={() => dispatch({type: 'CLOSE_SEND_MODAL'})} color="secondary">{t("cancel")}</Button>
             </ModalFooter>
         </Modal>
     )
