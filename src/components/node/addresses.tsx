@@ -9,6 +9,7 @@ import { Card, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, 
 import CardHeader from 'reactstrap/lib/CardHeader';
 import * as _ from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
+import CardTitle from 'reactstrap/lib/CardTitle';
 
 const { clipboard } = require('electron')
 
@@ -31,7 +32,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const getAddresses = (label: string = "") => {
         resolvedNode.getAddresses(label).then(resp => {
             setAddresses(resp);
-        }).catch((reason) => void(0));
+        }).catch((reason) => void (0));
     }
 
     const getNewAddress = () => {
@@ -45,10 +46,10 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     React.useEffect(() => {
         getAddresses();
 
-        if (node.type == "bitcoin") {
+        if (node.type == "bitcoin" || node.type == "litecoin") {
             resolvedNode.getLabels().then(resp => {
                 setLabels(resp);
-            }).catch((reason) => void(0));
+            }).catch((reason) => void (0));
         }
     }, [node]); // load new data on node props change
 
@@ -59,7 +60,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     return (
         <div>
             <Card>
-                {node.type == "bitcoin" &&
+                {(node.type == "bitcoin" || node.type == "litecoin") ?
                     <CardHeader>
                         <Nav tabs card={true}>
                             <NavItem className="d-flex align-items-center pr-3 pl-2">
@@ -78,9 +79,14 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                             </NavItem> */}
                         </Nav>
                     </CardHeader>
+                    :
+                    <CardHeader>
+                        <CardTitle>{t("addresses")}</CardTitle>
+                    </CardHeader>
                 }
+
                 {addresses.length > 0 ?
-                <Scrollbars style={{'height': '15rem'}}>
+                    <Scrollbars style={{ 'height': '15rem' }}>
                         <ListGroup flush>
                             {addresses.map((elem, index) => {
                                 return (
@@ -101,8 +107,8 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                             })}
                         </ListGroup>
 
-                </Scrollbars>
-                : <CardBody style={{'height': '15rem'}} className="d-flex align-items-center text-center"><p className="flex-fill">{t("no_data")}</p></CardBody>}
+                    </Scrollbars>
+                    : <CardBody style={{ 'height': '15rem' }} className="d-flex align-items-center text-center"><p className="flex-fill">{t("no_data")}</p></CardBody>}
 
                 <CardFooter className="d-flex">
                     <Button onClick={getNewAddress} className="ml-auto"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_address")}</Button>

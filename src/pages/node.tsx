@@ -27,13 +27,13 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
   const { t, i18n } = useTranslation();
   const [node, setNode] = React.useState<FullNodeConfig>();
   const [state, setState] = React.useState({
-    isSendToAddressModalOpen: false,
     loading: true,
     isReachable: true
   })
+  const [sendModalOpen, setSendModalOpen] = React.useState(false);
 
   const nodeContextValue = {
-    toggleSendToAddressModal: () => setState({ ...state, isSendToAddressModalOpen: !state.isSendToAddressModalOpen }),
+    toggleSendToAddressModal: () => setSendModalOpen(!sendModalOpen),
     isUnreachable: () => setState({...state, isReachable: false}),
     isReachable: () => setState({...state, isReachable: true})
   };
@@ -65,7 +65,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
               <NodeBalance node={node} />
             </div>
             <div className="col-3 d-flex">
-              <Button block onClick={() => setState({ ...state, isSendToAddressModalOpen: true })} color="primary"><FontAwesomeIcon icon={faUpload} /> Send</Button>
+              <Button block onClick={() => setSendModalOpen(true)} color="primary"><FontAwesomeIcon icon={faUpload} /> Send</Button>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
               <br />
             </div>
           </div>
-          {state.isSendToAddressModalOpen &&
+          {sendModalOpen &&
             <SendToAddressModal node={node} />
           }
         </main>)
