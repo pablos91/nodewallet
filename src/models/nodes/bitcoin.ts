@@ -40,7 +40,7 @@ export class Bitcoin implements FullNode {
                 _.forOwn(resp.data.result, (v, k) => addresses.push(k));
                 resolve(addresses);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     };
@@ -50,7 +50,7 @@ export class Bitcoin implements FullNode {
             Axios.post('/', new RPCRequest("getnewaddress", [label], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     };
@@ -60,7 +60,7 @@ export class Bitcoin implements FullNode {
             Axios.post('/', new RPCRequest("listlabels", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     };
@@ -87,7 +87,7 @@ export class Bitcoin implements FullNode {
                     resolve(resp.data.result); // thats txid in string
                 })
                 .catch((error: AxiosError) => {
-                    reject(error.response.data.error.message);
+                    reject();
                 })
         })
     }
@@ -115,7 +115,7 @@ export class Bitcoin implements FullNode {
                     resolve(transactions);
                 })
                 .catch((error: AxiosError) => {
-                    reject(error.response.data.error.message);
+                    reject();
                 })
         })
     }

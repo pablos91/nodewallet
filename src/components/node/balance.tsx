@@ -27,8 +27,9 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     const getBalance = () => {
         resolvedNode.getBalance().then(resp => {
             setBalance(resp);
+            nodeContext.isReachable()
         })
-        .catch((reason)=> alert(reason));
+        .catch((reason)=> nodeContext.isUnreachable());
 
         setSymbol(resolvedNode.symbol);
     }

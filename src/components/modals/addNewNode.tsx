@@ -45,9 +45,9 @@ const AddNewModal = () => {
                     globalContext.toggleNewNodeModal();
                 })
                 setLoading(false);
-            }).catch(() => {
+            }).catch((err) => {
                 // couldn't connect to node
-                alert(t("node_unreachable"));
+                alert(err);
                 setLoading(false);
             });
         }

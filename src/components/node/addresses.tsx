@@ -31,7 +31,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const getAddresses = (label: string = "") => {
         resolvedNode.getAddresses(label).then(resp => {
             setAddresses(resp);
-        }).catch((reason) => alert(reason));
+        }).catch((reason) => void(0));
     }
 
     const getNewAddress = () => {
@@ -48,7 +48,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         if (node.type == "bitcoin") {
             resolvedNode.getLabels().then(resp => {
                 setLabels(resp);
-            }).catch((reason) => alert(reason));
+            }).catch((reason) => void(0));
         }
     }, [node]); // load new data on node props change
 

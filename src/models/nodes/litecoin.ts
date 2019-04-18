@@ -28,7 +28,7 @@ export class Litecoin implements FullNode {
             Axios.post('/', new RPCRequest("getbalance", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject();
+                reject(error.message);
             })
         })
     }
@@ -40,7 +40,7 @@ export class Litecoin implements FullNode {
                 _.forOwn(resp.data.result, (v, k) => addresses.push(k));
                 resolve(addresses);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     };
@@ -50,7 +50,7 @@ export class Litecoin implements FullNode {
             Axios.post('/', new RPCRequest("getnewaddress", [label], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     };
@@ -60,7 +60,7 @@ export class Litecoin implements FullNode {
             Axios.post('/', new RPCRequest("listaccounts", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject(error.response.data.error);
+                reject();
             })
         })
     };
@@ -72,7 +72,7 @@ export class Litecoin implements FullNode {
                     resolve(true);
                 })
                 .catch((error: AxiosError) => {
-                    if (error.response.data.error.code == -15)
+                    if (error.response && error.response.data.error.code == -15)
                         resolve(true);
                     else
                         reject(false);
@@ -87,7 +87,7 @@ export class Litecoin implements FullNode {
                     resolve(resp.data.result); // thats txid in string
                 })
                 .catch((error: AxiosError) => {
-                    reject(error.response.data.error.message);
+                    reject();
                 })
         })
     }
@@ -115,7 +115,7 @@ export class Litecoin implements FullNode {
                     resolve(transactions);
                 })
                 .catch((error: AxiosError) => {
-                    reject(error.response.data.error.message);
+                    reject();
                 })
         })
     }
