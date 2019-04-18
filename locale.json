@@ -33,7 +33,8 @@
         "must_set_value": "Value must be greater than 0",
         "transactions": "Transactions",
         "no_data": "No data found",
-        "transactions_in_total": " transaction(s) found"
+        "transactions_in_total": " transaction(s) found",
+        "node_unreachable": "Node is unreachable. Please check the connectivity"
       }
     },
     "pl": {
@@ -69,7 +70,8 @@
         "must_set_value": "Wartość musi wynosić więcej niż zero",
         "transactions": "Transakcje",
         "no_data": "Nie znaleziono żadnych danych",
-        "transactions_in_total": " znalezionych transakcji"
+        "transactions_in_total": " znalezionych transakcji",
+        "node_unreachable": "Nie można połączyć z Node'm. Sprawdź proszę swoje połączenie"
       }
     }
   }

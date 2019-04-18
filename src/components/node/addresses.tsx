@@ -10,6 +10,7 @@ import CardHeader from 'reactstrap/lib/CardHeader';
 import * as _ from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
 import CardTitle from 'reactstrap/lib/CardTitle';
+import { NodeContext } from '../../pages/node';
 
 const { clipboard } = require('electron')
 
@@ -20,6 +21,7 @@ interface NodeAddressesProps {
 const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const { t, i18n } = useTranslation();
     const global = React.useContext(GlobalContext);
+    const {nodeContext} = React.useContext(NodeContext);
     const [addresses, setAddresses] = React.useState<string[]>([]);
     const [labels, setLabels] = React.useState<string[]>([]);
     const [state, setState] = React.useState({
@@ -57,7 +59,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         getAddresses(state.selectedLabel);
     }, [state.selectedLabel])
 
-    return (
+    return nodeContext.isReachable ? (
         <div>
             <Card>
                 {(node.type == "bitcoin" || node.type == "litecoin") ?
@@ -115,7 +117,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                 </CardFooter>
             </Card>
         </div>
-    );
+    ) : (<div></div>);
 }
 
 export default NodeAddresses;

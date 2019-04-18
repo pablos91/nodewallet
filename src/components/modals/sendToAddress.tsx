@@ -14,7 +14,7 @@ interface SendToAddressModalProps {
 }
 
 const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
-    const dispatch = React.useContext(NodeContext);
+    const {dispatch} = React.useContext(NodeContext);
     const [form, setForm] = React.useState({
         address: '',
         amount: '0',

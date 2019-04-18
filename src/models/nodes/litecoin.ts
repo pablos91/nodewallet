@@ -6,6 +6,7 @@ import { RPCResponse } from "../rpcresponse";
 import _ = require("lodash");
 import { SendToAddressForm } from "../sendToAddressForm";
 import { Transaction } from "../transaction";
+import i18n from "../../../i18n";
 
 export class Litecoin implements FullNode {
     symbol: string = "LTC";
@@ -28,7 +29,7 @@ export class Litecoin implements FullNode {
             Axios.post('/', new RPCRequest("getbalance", [], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
                 resolve(resp.data.result);
             }).catch((error: AxiosError) => {
-                reject(error.message);
+                reject(i18n.t("node_unreachable"));
             })
         })
     }

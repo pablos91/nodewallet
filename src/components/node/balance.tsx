@@ -19,7 +19,7 @@ interface NodeBalanceProps {
 const NodeBalance = ({ node }: NodeBalanceProps) => {
     const { t, i18n } = useTranslation();
     const global = React.useContext(GlobalContext);
-    const dispatch = React.useContext(NodeContext);
+    const {dispatch} = React.useContext(NodeContext);
     const [balance, setBalance] = React.useState(0);
     const [symbol, setSymbol] = React.useState('');
     const resolvedNode = NodeResolver(node);

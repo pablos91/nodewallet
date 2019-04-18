@@ -13,6 +13,7 @@ import CardTitle from 'reactstrap/lib/CardTitle';
 import CardBody from 'reactstrap/lib/CardBody';
 import { Transaction } from '../../models/transaction';
 import moment = require('moment');
+import { NodeContext } from '../../pages/node';
 
 const { clipboard, shell } = require('electron')
 
@@ -24,9 +25,8 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
     const { t, i18n } = useTranslation();
     const global = React.useContext(GlobalContext);
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-    const [state, setState] = React.useState({
+    const {nodeContext} = React.useContext(NodeContext);
 
-    })
     const resolvedNode = NodeResolver(node);
 
     const getTransactions = () => {
@@ -46,7 +46,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
         getTransactions();
     }, [node]); // load new data on node props change
 
-    return (
+    return nodeContext.isReachable ? (
         <div>
             <Card>
                 <CardHeader className="d-flex align-items-center pb-2">
@@ -84,7 +84,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
                 </CardFooter>
             </Card>
         </div>
-    );
+    ) : (<div></div>);
 }
 
 export default NodeTransactions;
