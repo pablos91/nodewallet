@@ -36,7 +36,7 @@ const NodePage = ({ match }: RouteComponentProps<NodePageProps>) => {
       case "REACHABLE_CHECK":
         return {...nodeState, isReachable: action.value};
       default:
-        throw t("action_unknown");
+        return nodeState;
     }
   }, {
     isReachable: true,
