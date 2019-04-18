@@ -14,6 +14,7 @@ import CardBody from 'reactstrap/lib/CardBody';
 import { Transaction } from '../../models/transaction';
 import moment = require('moment');
 import { NodeContext } from '../../pages/node';
+import BlockUi from 'react-block-ui';
 
 const { clipboard, shell } = require('electron')
 
@@ -26,12 +27,17 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
     const global = React.useContext(GlobalContext);
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
     const {nodeContext} = React.useContext(NodeContext);
-
+    const [state,setState] = React.useState({
+        loading: true
+    })
     const resolvedNode = NodeResolver(node);
 
     const getTransactions = () => {
+        setState({...state, loading: true});
         resolvedNode.getAllTransactions().then(resp => {
             setTransactions(resp);
+        }).finally(()=>{
+            setState({...state, loading: false});
         })
     }
 
@@ -47,7 +53,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
     }, [node]); // load new data on node props change
 
     return nodeContext.isReachable ? (
-        <div>
+        <BlockUi tag="div" blocking={state.loading}>
             <Card>
                 <CardHeader className="d-flex align-items-center pb-2">
                     <CardTitle className="mb-0 mt-2">
@@ -83,7 +89,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
                     <p className="my-2 text-right">{transactions.length} {t("transactions_in_total")}</p>
                 </CardFooter>
             </Card>
-        </div>
+        </BlockUi>
     ) : (<div></div>);
 }
 

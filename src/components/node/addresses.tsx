@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
 import CardTitle from 'reactstrap/lib/CardTitle';
 import { NodeContext } from '../../pages/node';
+import BlockUi from 'react-block-ui';
 
 const { clipboard } = require('electron')
 
@@ -27,14 +28,18 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const [state, setState] = React.useState({
         selectedLabel: "",
         copiedAddress: "",
-        newestAddress: ""
+        newestAddress: "",
+        loading: true
     })
     const resolvedNode = NodeResolver(node);
 
     const getAddresses = (label: string = "") => {
+        setState({...state, loading: true});
         resolvedNode.getAddresses(label).then(resp => {
             setAddresses(resp);
-        }).catch((reason) => void (0));
+        }).finally(()=>{
+            setState({...state, loading: false});
+        })
     }
 
     const getNewAddress = () => {
@@ -60,7 +65,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
     }, [state.selectedLabel])
 
     return nodeContext.isReachable ? (
-        <div>
+        <BlockUi tag="div" blocking={state.loading}>
             <Card>
                 {(node.type == "bitcoin" || node.type == "litecoin") ?
                     <CardHeader>
@@ -116,7 +121,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                     <Button onClick={getNewAddress} className="ml-auto"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_address")}</Button>
                 </CardFooter>
             </Card>
-        </div>
+        </BlockUi>
     ) : (<div></div>);
 }
 
