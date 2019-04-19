@@ -34,7 +34,7 @@ const MasterPage = withRouter(observer((props: RouteComponentProps) => {
           
         </div>
         <div className="d-flex" id="wrapper">
-          <SideBar nodes={nodes} toggleNewNodeModal={toggleNewNodeModal} />
+          <SideBar />
           <div id="page-content-wrapper">
             <Scrollbars style={{ height: 'calc(100vh - 26px)' }} autoHide>
               <Route path="/index" exact component={IndexPage} />

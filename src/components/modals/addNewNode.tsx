@@ -30,7 +30,7 @@ const AddNewModal = () => {
         rpcuser: [required],
         rpcpassword: [required]
     });
-    const { toggleNewNodeModal } = React.useContext(GlobalContext);
+    const { toggleNewNodeModal, addNewNode } = React.useContext(GlobalContext);
 
     const tryAddNewNode = async () => {
         setLoading(true);
@@ -42,6 +42,7 @@ const AddNewModal = () => {
             //console.log(state);
             NodeResolver(state).getBalance().then(() => {
                 config.saveNodeToConfig(state).then((node) => {
+                    addNewNode(node);
                     toggleNewNodeModal();
                 })
                 setLoading(false);

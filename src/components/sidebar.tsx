@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '../scss/components/sidebar.scss';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
@@ -14,9 +14,9 @@ import { observer } from 'mobx-react-lite'
 
 const packageJson = require('../../package.json');
 
-const SideBar = ({nodes, toggleNewNodeModal}) => {
+const SideBar = withRouter(observer((props:RouteComponentProps) => {
     const { t, i18n } = useTranslation();
-    // const global = React.useContext(GlobalStore);
+    const {nodes, toggleNewNodeModal} = React.useContext(GlobalStore);
 
 
     return (
@@ -40,6 +40,6 @@ const SideBar = ({nodes, toggleNewNodeModal}) => {
             </div>
         </div>
     );
-}
+}))
 
 export default SideBar;
