@@ -3,7 +3,7 @@ import { BrowserRouter, Route, NavLink, withRouter, RouteComponentProps } from '
 import IndexPage from '.';
 import SideBar from '../components/sidebar';
 import AddNewModal from '../components/modals/addNewNode';
-import GlobalStore from '../contexts/mobxglobal';
+import GlobalStore from '../contexts/global';
 import Scrollbars, { positionValues } from 'react-custom-scrollbars';
 import Settings from './settings';
 import NodePage from './node';

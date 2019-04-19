@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback } from 'reactstrap';
-import GlobalContext from '../../contexts/mobxglobal';
+import GlobalContext from '../../contexts/global';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { useTranslation } from 'react-i18next';
 import * as validator from 'validator'

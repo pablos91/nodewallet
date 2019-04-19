@@ -4,7 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
-import GlobalStore from '../contexts/mobxglobal';
+import GlobalStore from '../contexts/global';
 import { useTranslation } from 'react-i18next';
 import config from '../helpers/config';
 import { FullNodeConfig } from '../models/fullNodeConfig';
