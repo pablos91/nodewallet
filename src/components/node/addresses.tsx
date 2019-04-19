@@ -78,6 +78,9 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                                     </NavItem>
                                 ))
                             }
+                            {
+                                state.loading && <NavItem><ReactNavLink href="#">&nbsp;</ReactNavLink></NavItem>
+                            }
                             {/* it's impossible to add new label without adding new address.
                              <NavItem>
                                 <ReactNavLink href="#"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_label")}</ReactNavLink>
