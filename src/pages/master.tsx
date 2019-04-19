@@ -15,7 +15,7 @@ const { remote } = require('electron')
 const {platform} = require('os');
 
 const MasterPage = withRouter(observer((props: RouteComponentProps) => {
-  const globalStore = React.useContext(GlobalStore);
+  const {nodes, toggleNewNodeModal, isNewNodeModalOpen} = React.useContext(GlobalStore);
 
   const closeApplication = () => {
     remote.getCurrentWindow().close();
@@ -34,7 +34,7 @@ const MasterPage = withRouter(observer((props: RouteComponentProps) => {
           
         </div>
         <div className="d-flex" id="wrapper">
-          <SideBar nodes={globalStore.nodes} toggleNewNodeModal={globalStore.toggleNewNodeModal} />
+          <SideBar nodes={nodes} toggleNewNodeModal={toggleNewNodeModal} />
           <div id="page-content-wrapper">
             <Scrollbars style={{ height: 'calc(100vh - 26px)' }} autoHide>
               <Route path="/index" exact component={IndexPage} />
@@ -42,7 +42,7 @@ const MasterPage = withRouter(observer((props: RouteComponentProps) => {
               <Route path="/settings" component={Settings} />
             </Scrollbars>
           </div>
-          <div>{globalStore.isNewNodeModalOpen && <AddNewModal />}</div>
+          <div>{isNewNodeModalOpen && <AddNewModal />}</div>
         </div>
       </div>
   );
