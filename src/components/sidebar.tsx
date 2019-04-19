@@ -1,21 +1,22 @@
 import * as React from 'react';
 import '../scss/components/sidebar.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
-import { GlobalProvider, GlobalContext } from '../contexts/global';
+import GlobalStore from '../contexts/mobxglobal';
 import { useTranslation } from 'react-i18next';
 import config from '../helpers/config';
 import { FullNodeConfig } from '../models/fullNodeConfig';
 import SideBarElement from './sidebarElement';
 import Scrollbars, { positionValues } from 'react-custom-scrollbars';
+import { observer } from 'mobx-react-lite'
 
 const packageJson = require('../../package.json');
 
-const SideBar = () => {
+const SideBar = ({nodes, toggleNewNodeModal}) => {
     const { t, i18n } = useTranslation();
-    const global = React.useContext(GlobalContext);
+    // const global = React.useContext(GlobalStore);
 
 
     return (
@@ -23,10 +24,10 @@ const SideBar = () => {
             <div className="sidebar-heading">Fullnode UI <small>v{packageJson.version}</small> </div>
             <div className="list-group list-group-flush">
                 {/* this one repeats */}
-                {global.nodes && global.nodes.map((elem: FullNodeConfig, index) => (
+                {nodes && nodes.map((elem: FullNodeConfig, index) => (
                     <SideBarElement key={"sidebar_element_" + index} node={elem} />
                 ))}
-                <a href="javascript:void(0)" onClick={global.toggleNewNodeModal} className="d-flex list-group-item flex-column align-items-center list-group-item-action">
+                <a href="javascript:void(0)" onClick={toggleNewNodeModal} className="d-flex list-group-item flex-column align-items-center list-group-item-action">
                     <FontAwesomeIcon icon={faPlusCircle} size="1x" />
                     <span className="">{t("add_new_node")}</span>
                 </a>

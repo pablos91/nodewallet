@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle, faCopy, faDownload, faUpload, faSync, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
-import { GlobalContext } from '../../contexts/global';
 import { useTranslation } from 'react-i18next';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { NodeResolver } from '../../models/nodes/noderesolver';
@@ -24,7 +23,6 @@ interface NodeTransactionsProps {
 
 const NodeTransactions = ({ node }: NodeTransactionsProps) => {
     const { t, i18n } = useTranslation();
-    const global = React.useContext(GlobalContext);
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
     const {nodeContext} = React.useContext(NodeContext);
     const [state,setState] = React.useState({

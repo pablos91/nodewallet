@@ -3,7 +3,6 @@ import { NavLink, NavLinkProps } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons'
-import { GlobalContext } from '../../contexts/global';
 import { useTranslation } from 'react-i18next';
 import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { RPCRequest } from '../../models/rpcrequest';
@@ -18,7 +17,6 @@ interface NodeBalanceProps {
 
 const NodeBalance = ({ node }: NodeBalanceProps) => {
     const { t, i18n } = useTranslation();
-    const global = React.useContext(GlobalContext);
     const {dispatch} = React.useContext(NodeContext);
     const [balance, setBalance] = React.useState(0);
     const [symbol, setSymbol] = React.useState('');

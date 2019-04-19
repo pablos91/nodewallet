@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlusCircle, faCopy } from '@fortawesome/free-solid-svg-icons'
-import { GlobalContext } from '../../contexts/global';
 import { useTranslation } from 'react-i18next';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { NodeResolver } from '../../models/nodes/noderesolver';
@@ -21,7 +20,6 @@ interface NodeAddressesProps {
 
 const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const { t, i18n } = useTranslation();
-    const global = React.useContext(GlobalContext);
     const {nodeContext} = React.useContext(NodeContext);
     const [addresses, setAddresses] = React.useState<string[]>([]);
     const [labels, setLabels] = React.useState<string[]>([]);
