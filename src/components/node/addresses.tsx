@@ -9,7 +9,7 @@ import CardHeader from 'reactstrap/lib/CardHeader';
 import * as _ from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
 import CardTitle from 'reactstrap/lib/CardTitle';
-import { NodeContext } from '../../pages/node';
+import NodeContext from '../../contexts/nodecontext';
 import BlockUi from 'react-block-ui';
 
 const { clipboard } = require('electron')
@@ -20,7 +20,7 @@ interface NodeAddressesProps {
 
 const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const { t, i18n } = useTranslation();
-    const {nodeContext} = React.useContext(NodeContext);
+    const {isReachable} = React.useContext(NodeContext);
     const [addresses, setAddresses] = React.useState<string[]>([]);
     const [labels, setLabels] = React.useState<string[]>([]);
     const [state, setState] = React.useState({
@@ -62,7 +62,7 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         getAddresses(state.selectedLabel);
     }, [state.selectedLabel])
 
-    return nodeContext.isReachable ? (
+    return isReachable ? (
         <BlockUi tag="div" blocking={state.loading}>
             <Card>
                 {(node.type == "bitcoin" || node.type == "litecoin") ?

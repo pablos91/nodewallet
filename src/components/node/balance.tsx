@@ -9,7 +9,7 @@ import { RPCRequest } from '../../models/rpcrequest';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { RPCResponse } from '../../models/rpcresponse';
 import { NodeResolver } from '../../models/nodes/noderesolver';
-import { NodeContext } from '../../pages/node';
+import NodeContext from '../../contexts/nodecontext';
 
 interface NodeBalanceProps {
     node: FullNodeConfig;
@@ -17,7 +17,7 @@ interface NodeBalanceProps {
 
 const NodeBalance = ({ node }: NodeBalanceProps) => {
     const { t, i18n } = useTranslation();
-    const {dispatch} = React.useContext(NodeContext);
+    const nodeContext = React.useContext(NodeContext);
     const [balance, setBalance] = React.useState(0);
     const [symbol, setSymbol] = React.useState('');
     const resolvedNode = NodeResolver(node);
@@ -27,9 +27,9 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
 
         resolvedNode.getBalance().then(resp => {
             setBalance(resp);
-            dispatch({type: 'REACHABLE_CHECK', value: true});
+            nodeContext.isReachable = true;
         })
-        .catch((reason)=> dispatch({type: 'REACHABLE_CHECK', value: false}));
+        .catch((reason)=> nodeContext.isReachable = false);
 
         setSymbol(resolvedNode.symbol);
     }

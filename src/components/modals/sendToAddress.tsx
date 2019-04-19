@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, Form, FormGroup, Label, FormFeedback, Alert, InputGroup, InputGroupText, InputGroupAddon } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
-import { NodeContext } from '../../pages/node';
 import { SendToAddressForm } from '../../models/sendToAddressForm';
 import { required, overZero } from '../../helpers/validators';
 import useValidator, { createRule } from "react-use-validator";
 import _ = require('lodash');
 import { NodeResolver } from '../../models/nodes/noderesolver';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
+import NodeContext from '../../contexts/nodecontext';
 
 interface SendToAddressModalProps {
     node: FullNodeConfig;
 }
 
 const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
-    const {dispatch} = React.useContext(NodeContext);
+  const {toggleSendModal} = React.useContext(NodeContext);
     const [form, setForm] = React.useState({
         address: '',
         amount: '0',
@@ -98,7 +98,7 @@ const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
             </ModalBody>
             <ModalFooter>
                 <Button disabled={form.loading} onClick={trySendToAddress} color="primary">{t("send")}</Button>{' '}
-                <Button onClick={() => dispatch({type: 'CLOSE_SEND_MODAL'})} color="secondary">{t("cancel")}</Button>
+                <Button onClick={() => toggleSendModal()} color="secondary">{t("cancel")}</Button>
             </ModalFooter>
         </Modal>
     )

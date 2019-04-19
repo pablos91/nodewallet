@@ -12,7 +12,7 @@ import CardTitle from 'reactstrap/lib/CardTitle';
 import CardBody from 'reactstrap/lib/CardBody';
 import { Transaction } from '../../models/transaction';
 import moment = require('moment');
-import { NodeContext } from '../../pages/node';
+import NodeContext from '../../contexts/nodecontext';
 import BlockUi from 'react-block-ui';
 
 const { clipboard, shell } = require('electron')
@@ -24,7 +24,7 @@ interface NodeTransactionsProps {
 const NodeTransactions = ({ node }: NodeTransactionsProps) => {
     const { t, i18n } = useTranslation();
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-    const {nodeContext} = React.useContext(NodeContext);
+    const {isReachable} = React.useContext(NodeContext);
     const [state,setState] = React.useState({
         loading: true
     })
@@ -50,7 +50,7 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
         getTransactions();
     }, [node]); // load new data on node props change
 
-    return nodeContext.isReachable ? (
+    return isReachable ? (
         <BlockUi tag="div" blocking={state.loading}>
             <Card>
                 <CardHeader className="d-flex align-items-center pb-2">
