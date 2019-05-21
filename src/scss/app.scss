@@ -2,6 +2,8 @@ $border-radius: none;
 $primary: #563d7c;
 $info: #8468ac;
 $modal-content-border-radius: none;
+$enable-transitions: false;
+$enable-rounded: false;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
