@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter, RouteComponentProps, withRouter } from 'react-router-dom';
+import { BrowserRouter, RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import config from '../helpers/config';
 import { FullNodeConfig } from '../models/fullNodeConfig';
@@ -15,6 +15,7 @@ import BlockUi from 'react-block-ui';
 import NodeContext from '../contexts/nodecontext';
 import { observer } from 'mobx-react-lite';
 import Scrollbars from 'react-custom-scrollbars';
+import GlobalContext from '../contexts/global';
 
 interface NodePageProps {
   id: string;
@@ -23,7 +24,17 @@ interface NodePageProps {
 const NodePage = withRouter(observer(({ match }: RouteComponentProps<NodePageProps>) => {
   const { t, i18n } = useTranslation();
   const [node, setNode] = React.useState<FullNodeConfig>();
+  const [isDestructive, setDestructive] = React.useState<boolean>();
+
   const nodeContext = React.useContext(NodeContext);
+  const { removeNode } = React.useContext(GlobalContext);
+
+  const tryRemoveNode = () => {
+    config.removeNodeFromConfig(node).then(() => {
+      removeNode(node);
+      setDestructive(true);
+    });
+  }
 
   React.useEffect(() => {
     setNode(null);
@@ -35,7 +46,7 @@ const NodePage = withRouter(observer(({ match }: RouteComponentProps<NodePagePro
   }, [match.params.id]); // load new node on url change
 
 
-  return node ? (<div className="h-100">
+  return isDestructive ? <Redirect to={'/index'} /> : node ? (<div className="h-100">
     {nodeContext.isReachable ?
       <Scrollbars style={{ height: 'calc(100vh - 26px)' }} autoHide>
         <main>
@@ -68,7 +79,7 @@ const NodePage = withRouter(observer(({ match }: RouteComponentProps<NodePagePro
       <div className="d-flex justify-content-center bg-info text-light h-100 align-items-center flex-column">
         <FontAwesomeIcon icon={faWifi} size="4x" className="mb-2"/>
         <p>{t("node_unreachable")}</p>
-        <Button color="danger">{t("delete_node")}</Button>
+        <Button onClick={() => tryRemoveNode()} color="danger">{t("delete_node")}</Button>
       </div>
     }
   </div>

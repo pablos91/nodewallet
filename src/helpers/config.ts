@@ -62,6 +62,20 @@ class Config {
             });
         });
     }
+
+    removeNodeFromConfig = (node:FullNodeConfig) => {
+        return new Promise<FullNodeConfig>((resolve, reject) => {
+            fs.exists(configPath, (exists) => {
+                if (exists) {
+                    this.config.nodes.splice(this.config.nodes.indexOf(node), 1);
+                    fs.writeFileSync(configPath, JSON.stringify(this.config));
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
+        });
+    }
 }
 
 const config = new Config();

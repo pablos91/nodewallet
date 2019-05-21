@@ -21,6 +21,10 @@ class GlobalStore {
     addNewNode = (node: FullNodeConfig) => {
         this.nodes.push(node);
     }
+
+    removeNode = (node: FullNodeConfig) => {
+        this.nodes.splice(this.nodes.indexOf(node), 1);
+    }
 }
 
 

@@ -11,6 +11,7 @@ import { NodeInfo } from '../models/nodeInfo';
 import { UncontrolledTooltip } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 
+
 interface SidebarElementProps {
     node: FullNodeConfig;
 }
