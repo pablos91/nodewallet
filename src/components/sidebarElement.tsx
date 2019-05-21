@@ -41,7 +41,7 @@ const SideBarElement = ({ node }: SidebarElementProps) => {
 
     return (
         <NavLink to={"/node/" + node.id} className="d-flex list-group-item flex-row align-items-center list-group-item-action">
-            <FontAwesomeIcon icon={icon} size="2x" />
+            {/* <FontAwesomeIcon icon={icon} size="2x" /> */}
             <span className="ml-2">{node.name}</span>
             <Observer>{() => <span id={"blockchainInfo_"+node.id} className={`ml-auto`}>{state.nodeInfo.progress == 1 ? <FontAwesomeIcon icon={faCloud} /> : <FontAwesomeIcon icon={faCloudDownloadAlt} />}</span>}</Observer>
             <UncontrolledTooltip placement="bottom" target={"blockchainInfo_"+node.id}>
