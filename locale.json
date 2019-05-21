@@ -36,7 +36,8 @@
         "transactions_in_total": " transaction(s) found",
         "node_unreachable": "Node is unreachable. Please check the connectivity",
         "out_of": "out of",
-        "blocks": "blocks"
+        "blocks": "blocks",
+        "delete_node": "Delete node"
       }
     },
     "pl": {
@@ -75,7 +76,8 @@
         "transactions_in_total": " znalezionych transakcji",
         "node_unreachable": "Nie można połączyć z Node'm. Sprawdź proszę swoje połączenie",
         "out_of": "z",
-        "blocks": "bloków"
+        "blocks": "bloków",
+        "delete_node": "Usuń node'a"
       }
     }
   }

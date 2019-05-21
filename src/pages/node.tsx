@@ -68,6 +68,7 @@ const NodePage = withRouter(observer(({ match }: RouteComponentProps<NodePagePro
       <div className="d-flex justify-content-center bg-info text-light h-100 align-items-center flex-column">
         <FontAwesomeIcon icon={faWifi} size="4x" className="mb-2"/>
         <p>{t("node_unreachable")}</p>
+        <Button color="danger">{t("delete_node")}</Button>
       </div>
     }
   </div>
