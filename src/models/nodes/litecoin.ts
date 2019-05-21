@@ -7,6 +7,7 @@ import _ = require("lodash");
 import { SendToAddressForm } from "../sendToAddressForm";
 import { Transaction } from "../transaction";
 import i18n from "../../../i18n";
+import { NodeInfo } from "../nodeInfo";
 
 export class Litecoin implements FullNode {
     symbol: string = "LTC";
@@ -116,6 +117,25 @@ export class Litecoin implements FullNode {
                     }
 
                     resolve(transactions);
+                })
+                .catch((error: AxiosError) => {
+                    reject();
+                })
+        })
+    }
+
+    getBlockchainInfo = () => {
+        return new Promise<NodeInfo>((resolve, reject) => {
+            Axios.post('/', new RPCRequest("getblockchaininfo", [], 1), this.config)
+                .then((resp: AxiosResponse<RPCResponse>) => {
+                    if(resp.data.result) {
+                        resolve({
+                            blocks: resp.data.result.blocks,
+                            blockHeaders: resp.data.result.headers,
+                            progress: resp.data.result.blocks / resp.data.result.headers,
+                            blockchain: resp.data.result.chain
+                        });
+                    }
                 })
                 .catch((error: AxiosError) => {
                     reject();
