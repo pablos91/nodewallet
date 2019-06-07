@@ -45,7 +45,7 @@
     "react-dom": "^16.8.6",
     "react-i18next": "^10.6.1",
     "react-router-dom": "^4.2.2",
-    "react-use-validator": "^1.0.3",
+    "react-use-validator": "^1.0.4",
     "react-validation": "^3.0.7",
     "reactstrap": "^8.0.0",
     "validator": "^10.11.0"
