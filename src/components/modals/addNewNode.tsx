@@ -13,15 +13,22 @@ import { NodeResolver } from '../../models/nodes/noderesolver';
 import BlockUi from 'react-block-ui';
 import { useObservable, observer } from 'mobx-react-lite';
 
-const AddNewModal = observer(() => {
+interface AddNewModalProps
+{
+    isOpen: boolean;
+}
 
-    const state = useObservable<FullNodeConfig>({
+const AddNewModal = observer(({isOpen}: AddNewModalProps) => {
+
+    const defaults = {
         name: '',
         type: 'bitcoin',
         url: '',
         rpcpassword: '',
         rpcuser: ''
-    })
+    }
+
+    const state = useObservable<FullNodeConfig>(defaults)
 
     const { t } = useTranslation();
     // const [state, setState] = React.useState<FullNodeConfig>(defaults);
@@ -58,8 +65,13 @@ const AddNewModal = observer(() => {
 
     }
 
+    React.useEffect(()=>{
+        validate.reset();
+        Object.assign(state, defaults);
+    },[isOpen])
+
     return (
-        <Modal size="lg" isOpen={true} centered>
+        <Modal size="lg" isOpen={isOpen} centered>
             <ModalHeader>{t("add_new_node")}</ModalHeader>
             <ModalBody>
                 {/* <p>{t("add_new_node_desc")}</p> */}

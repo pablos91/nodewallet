@@ -40,7 +40,7 @@ const MasterPage = withRouter(observer((props: RouteComponentProps) => {
               <Route path="/node/:id" component={NodePage} />
               <Route path="/settings" component={Settings} />
           </div>
-          <div>{isNewNodeModalOpen && <AddNewModal />}</div>
+          <AddNewModal isOpen={isNewNodeModalOpen} />
         </div>
       </div>
   );
