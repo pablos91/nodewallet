@@ -10,15 +10,16 @@ import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { RPCResponse } from '../../models/rpcresponse';
 import { NodeResolver } from '../../models/nodes/noderesolver';
 import NodeContext from '../../contexts/nodecontext';
+import { observer } from 'mobx-react-lite';
 
 interface NodeBalanceProps {
     node: FullNodeConfig;
 }
 
-const NodeBalance = ({ node }: NodeBalanceProps) => {
+const NodeBalance = observer(({ node }: NodeBalanceProps) => {
     const { t, i18n } = useTranslation();
     const nodeContext = React.useContext(NodeContext);
-    const [balance, setBalance] = React.useState(0);
+    //const [balance, setBalance] = React.useState(0);
     const [symbol, setSymbol] = React.useState('');
     const resolvedNode = NodeResolver(node);
 
@@ -26,7 +27,7 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
         //console.log('balance check');
 
         resolvedNode.getBalance().then(resp => {
-            setBalance(resp);
+            nodeContext.balance = resp;
             nodeContext.isReachable = true;
         })
         .catch((reason)=> nodeContext.isReachable = false);
@@ -47,9 +48,9 @@ const NodeBalance = ({ node }: NodeBalanceProps) => {
     return (
         <div>
             <strong>{t("balance")}</strong>
-            <h2>{balance} {symbol}</h2>
+            <h2>{nodeContext.balance} {symbol}</h2>
         </div>
     );
-}
+})
 
 export default NodeBalance;

@@ -11,7 +11,8 @@ class NodeContext {
 
     @observable isReachable: boolean = true;
     @observable isSendModalOpen: boolean = false;
-
+    @observable balance: number = 0;
+    
     toggleSendModal = () => {
         this.isSendModalOpen = !this.isSendModalOpen;
     }

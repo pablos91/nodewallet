@@ -70,9 +70,7 @@ const NodePage = withRouter(observer(({ match }: RouteComponentProps<NodePagePro
               <br />
             </div>
           </div>
-          {nodeContext.isSendModalOpen && nodeContext.isReachable &&
-            <SendToAddressModal node={node} />
-          }
+          <SendToAddressModal node={node} isOpen={nodeContext.isSendModalOpen && nodeContext.isReachable}/>
         </main>
       </Scrollbars>
       :

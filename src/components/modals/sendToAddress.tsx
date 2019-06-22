@@ -8,21 +8,28 @@ import _ = require('lodash');
 import { NodeResolver } from '../../models/nodes/noderesolver';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import NodeContext from '../../contexts/nodecontext';
+import { useObservable, observer } from 'mobx-react-lite';
 
 interface SendToAddressModalProps {
     node: FullNodeConfig;
+    isOpen: boolean;
 }
 
-const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
-  const {toggleSendModal} = React.useContext(NodeContext);
-    const [form, setForm] = React.useState({
+const SendToAddressModal = observer(({ node, isOpen }: SendToAddressModalProps) => {
+  const {toggleSendModal, balance} = React.useContext(NodeContext);
+
+  const defaults = {
         address: '',
         amount: '0',
         comment: '',
         loading: false,
         walletPass: ''
-    })
+    }
+
+    const form = useObservable(defaults)
+
     const { t } = useTranslation();
+
     const [messages, validate] = useValidator({
         address: [required],
         amount: [overZero],
@@ -53,8 +60,17 @@ const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
         }
     }
 
+    const getMaxValue = () => {
+        form.amount = balance.toString();
+    }
+
+    React.useEffect(()=>{
+        validate.reset();
+        Object.assign(form, defaults);
+    },[isOpen])
+
     return (
-        <Modal isOpen={true} centered>
+        <Modal isOpen={isOpen} centered>
             <ModalHeader>{t("send_to_address")}</ModalHeader>
             <ModalBody>
                 {error &&
@@ -71,27 +87,30 @@ const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
                 <Form onSubmit={trySendToAddress}>
                     <FormGroup>
                         <Label>{t("address")}</Label>
-                        <Input invalid={messages.address} value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} />
+                        <Input invalid={messages.address} value={form.address} onChange={(e) => form.address = e.target.value } />
                         <FormFeedback>{messages.address}</FormFeedback>
                     </FormGroup>
                     <FormGroup>
                         <Label>{t("amount")}</Label>
                         <InputGroup>
-                            <Input type="number" min="0" step="0.001" invalid={messages.amount} value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
+                            <Input type="number" min="0" step="0.001" invalid={messages.amount} value={form.amount} onChange={(e) => form.amount = e.target.value } />
                             <InputGroupAddon addonType="append">
                                 <InputGroupText>{resolvedNode.symbol}</InputGroupText>
+                            </InputGroupAddon>
+                            <InputGroupAddon addonType="append">
+                                <Button onClick={getMaxValue} color="secondary">MAX</Button>
                             </InputGroupAddon>
                         </InputGroup>
                         <FormFeedback>{messages.amount}</FormFeedback>
                     </FormGroup>
                     <FormGroup>
                         <Label>{t("comment")}</Label>
-                        <Input invalid={messages.comment} value={form.comment} onChange={(e) => setForm({ ...form, comment: e.target.value })} />
+                        <Input invalid={messages.comment} value={form.comment} onChange={(e) => form.comment = e.target.value } />
                         <FormFeedback>{messages.comment}</FormFeedback>
                     </FormGroup>
                     <FormGroup>
                         <Label>{t("wallet_password")}</Label>
-                        <Input type="password" invalid={messages.walletPass} value={form.walletPass} onChange={(e) => setForm({ ...form, walletPass: e.target.value })} />
+                        <Input type="password" invalid={messages.walletPass} value={form.walletPass} onChange={(e) => form.walletPass = e.target.value } />
                         <FormFeedback>{messages.walletPass}</FormFeedback>
                     </FormGroup>
                 </Form>
@@ -103,6 +122,6 @@ const SendToAddressModal = ({ node }: SendToAddressModalProps) => {
         </Modal>
     )
 
-}
+})
 
 export default SendToAddressModal;
