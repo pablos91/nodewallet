@@ -43,6 +43,8 @@ const NodeTransactions = ({ node }: NodeTransactionsProps) => {
         switch(node.type){
             case "bitcoin":
                 shell.openExternal(`https://live.blockcypher.com/btc/tx/${txid}/`);
+            case "litecoin":
+                shell.openExternal(`https://live.blockcypher.com/ltc/tx/${txid}/`);
         }
     }
 
