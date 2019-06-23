@@ -41,7 +41,6 @@ const SendToAddressModal = observer(({ node, isOpen }: SendToAddressModalProps) 
 
     const trySendToAddress = async () => {
         setError('');
-        setSuccess('');
 
         var msg: string[] = await validate(form);
         if (_.size(msg) > 0) {
