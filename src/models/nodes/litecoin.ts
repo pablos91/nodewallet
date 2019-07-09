@@ -40,7 +40,9 @@ export class Litecoin implements FullNode {
     getAddresses = (label: string = "") => {
         return new Promise<string[]>((resolve, reject) => {
             Axios.post('/', new RPCRequest("getaddressesbylabel", [label], 1), this.config).then((resp: AxiosResponse<RPCResponse>) => {
-                resolve(resp.data.result);
+                let addresses: string[] = [];
+                _.forOwn(resp.data.result, (v, k) => addresses.push(k));
+                resolve(addresses);
             }).catch((error: AxiosError) => {
                 reject();
             })
