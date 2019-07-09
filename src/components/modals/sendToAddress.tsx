@@ -37,12 +37,10 @@ const SendToAddressModal = observer(({ node, isOpen }: SendToAddressModalProps) 
     });
 
     const [error, setError] = React.useState("");
-    const [success, setSuccess] = React.useState("");
     const resolvedNode = NodeResolver(node);
 
     const trySendToAddress = async () => {
         setError('');
-        setSuccess('');
 
         var msg: string[] = await validate(form);
         if (_.size(msg) > 0) {
@@ -50,7 +48,7 @@ const SendToAddressModal = observer(({ node, isOpen }: SendToAddressModalProps) 
         } else {
             NodeResolver(node).unlockWallet(form.walletPass).then((resp) => {
                 NodeResolver(node).sendToAddress(form).then((resp) => {
-                    setSuccess(t("amount_sent_to_address") + " " + form.address);
+                    toggleSendModal();
                 }).catch(error => {
                     setError(error);
                 })
@@ -78,12 +76,6 @@ const SendToAddressModal = observer(({ node, isOpen }: SendToAddressModalProps) 
                         {error}
                     </Alert>
                 }
-                {success &&
-                    <Alert color="success">
-                        {success}
-                    </Alert>
-                }
-                {/* <p>{t("send_to_address_desc")}</p> */}
                 <Form onSubmit={trySendToAddress}>
                     <FormGroup>
                         <Label>{t("address")}</Label>
