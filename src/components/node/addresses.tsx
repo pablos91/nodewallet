@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog, faPlusCircle, faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faCog, faPlusCircle, faCopy, faQrcode } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next';
 import { FullNodeConfig } from '../../models/fullNodeConfig';
 import { NodeResolver } from '../../models/nodes/noderesolver';
-import { Card, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip, CardBody } from 'reactstrap';
+import { Card, Nav, NavItem, NavLink as ReactNavLink, ListGroup, ListGroupItem, CardFooter, Button, UncontrolledTooltip, CardBody, Modal, ModalBody } from 'reactstrap';
 import CardHeader from 'reactstrap/lib/CardHeader';
 import * as _ from 'lodash';
 import Scrollbars from 'react-custom-scrollbars';
 import CardTitle from 'reactstrap/lib/CardTitle';
 import NodeContext from '../../contexts/nodecontext';
 import BlockUi from 'react-block-ui';
+import * as QRCode from 'qrcode'
+import { useObservable } from 'mobx-react-lite';
 
 const { clipboard } = require('electron')
 
@@ -20,7 +22,7 @@ interface NodeAddressesProps {
 
 const NodeAddresses = ({ node }: NodeAddressesProps) => {
     const { t, i18n } = useTranslation();
-    const {isReachable} = React.useContext(NodeContext);
+    const { isReachable } = React.useContext(NodeContext);
     const [addresses, setAddresses] = React.useState<string[]>([]);
     const [labels, setLabels] = React.useState<string[]>([]);
     const [state, setState] = React.useState({
@@ -29,14 +31,34 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
         newestAddress: "",
         loading: true
     })
+    const [isQrCodeOpen, showQrCode] = React.useState(false);
+    const [qrCodeAddress, setQrCodeAddress] = React.useState("");
+
+    const toggleQrCode = (address?) => {
+        if (address) {
+            QRCode.toDataURL(address, {
+                errorCorrectionLevel: 'H',
+                type: 'image/jpeg',
+                rendererOpts: {
+                  quality: 1
+                },
+                scale: 10
+              })
+                .then(url => {
+                    setQrCodeAddress(url)
+                })
+        }
+        showQrCode(!isQrCodeOpen);
+    }
+
     const resolvedNode = NodeResolver(node);
 
     const getAddresses = (label: string = "") => {
-        setState({...state, loading: true});
+        setState({ ...state, loading: true });
         resolvedNode.getAddresses(label).then(resp => {
             setAddresses(resp);
-        }).finally(()=>{
-            setState({...state, loading: false});
+        }).finally(() => {
+            setState({ ...state, loading: false });
         })
     }
 
@@ -101,11 +123,11 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                                     <ListGroupItem color={elem == state.newestAddress ? "warning" : ""} className="d-flex align-items-center" key={"address_" + index} tag="div">
                                         {elem}
                                         <div className="ml-auto">
+                                            <a href="javascript:void(0)" onClick={e => toggleQrCode(elem)}><FontAwesomeIcon icon={faQrcode} /></a>
+                                        </div>
+                                        <div className="ml-2">
                                             <a href="javascript:void(0)" onClick={() => { clipboard.writeText(elem); setState({ ...state, copiedAddress: elem }) }} id={"clipboard_" + index}><FontAwesomeIcon icon={faCopy} /></a>
-                                            {/* <a className="ml-2" href="javascript:void(0)" id={"details_" + index}><FontAwesomeIcon icon={faInfoCircle} /></a>
-                                            <UncontrolledTooltip placement="bottom" target={"details_" + index}>
-                                                {t("show_address_details")}
-                                            </UncontrolledTooltip> */}
+
                                             <UncontrolledTooltip placement="bottom" target={"clipboard_" + index}>
                                                 {state.copiedAddress == elem ? t("copied") : t("copy_to_clipboard")}
                                             </UncontrolledTooltip>
@@ -122,6 +144,11 @@ const NodeAddresses = ({ node }: NodeAddressesProps) => {
                     <Button onClick={getNewAddress} className="ml-auto"><FontAwesomeIcon icon={faPlusCircle} /> {t("add_new_address")}</Button>
                 </CardFooter>
             </Card>
+            <Modal size="sm" isOpen={isQrCodeOpen} centered toggle={() => toggleQrCode()}>
+                <ModalBody>
+                    <img src={qrCodeAddress} style={{width: "100%"}}/>
+                </ModalBody>
+            </Modal>
         </BlockUi>
     ) : (<div></div>);
 }
