@@ -1,6 +1,6 @@
 {
-    "appId": "pl.com.maple.fullnodeui",
-    "productName": "FullNode UI",
+    "appId": "pl.com.maple.nodewallet",
+    "productName": "Nodewallet",
     "publish": null,
     "directories": {
       "output": "builds"

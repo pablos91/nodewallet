@@ -21,7 +21,7 @@ const SideBar = withRouter(observer((props:RouteComponentProps) => {
 
     return (
         <div className="bg-light border-right" id="sidebar-wrapper">
-            <div className="sidebar-heading">Fullnode UI <small>v{packageJson.version}</small> </div>
+            <div className="sidebar-heading">Nodewallet <small>v{packageJson.version}</small> </div>
             <div className="list-group list-group-flush">
                 {/* this one repeats */}
                 {nodes && nodes.map((elem: FullNodeConfig, index) => (

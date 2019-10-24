@@ -1,5 +1,5 @@
 {
-  "name": "fullnode-ui",
+  "name": "nodewallet",
   "version": "1.0.0",
   "description": "",
   "main": "electrum.js",
